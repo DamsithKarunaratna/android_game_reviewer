@@ -5,7 +5,6 @@ There are two main components to this Assignment.
 ### 1. Source Code
 The Android app has to include particular features as follows:
 
-- [ ] List item
 
 - [ ] The app should get data through a web service or a server
 - [ ] Web service to call up brands

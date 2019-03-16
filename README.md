@@ -18,9 +18,9 @@ The purpose of this is to demonstrate your proficiency at using the API to disco
 
 ### 2. Detailed report
 You should write a complete report describes your app with following Criteria.
-• **Screen shots** of all UI’s
-• **Xml and java code** (not screen shots). Copy and paste your codes.
-• All the **references**
+- **Screen shots** of all UI’s
+- **Xml and java code** (not screen shots). Copy and paste your codes.
+- All the **references**
 
 ## What do you have to hand in?
 Project Code AND a screen print: Provide a single zipped file containing all directories/files
@@ -37,12 +37,12 @@ IT15895623.zip
 How will your app code be marked?
 
 ## Marks for the source code for the app will be as follows.
-• **Accuracy/ Completeness** (50%) – for supplying the deliverables listed (code), and
+- **Accuracy/ Completeness** (50%) – for supplying the deliverables listed (code), and
 for handing in an app that meets the various points in the specification. Your app
 should work without runtime errors so test it.
-• **Quality of the user interface** (20%) –Are the screens easy to use? Are they laid out
+- **Quality of the user interface** (20%) –Are the screens easy to use? Are they laid out
 neatly? Do they look viable?
-• **Overall quality and complexity of the app** (30%) –Does your app function well and
+- **Overall quality and complexity of the app** (30%) –Does your app function well and
 robustly? What extra features beyond the standard functionality requested are
 included? How viable and complex is it?
 

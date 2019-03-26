@@ -4,7 +4,7 @@
 
 ## Objective
 
-As a Game Reviewer app user I need to be able to add a Game that I played and add a review comment. If the Game is already available in the list I should be able to add more review comments.
+As a Game Reviewer app user I need to be able to add a Game that I played and add a reviews comment. If the Game is already available in the list I should be able to add more reviews comments.
 
 ## Specification
 There are two main components to this Assignment.

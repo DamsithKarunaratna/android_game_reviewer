@@ -7,3 +7,4 @@
  - [Official guide to 'Room'](https://developer.android.com/training/data-storage/room/)
  - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
  - [ViewModel](https://developer.android.com/reference/android/arch/lifecycle/ViewModel)
+ - [Using Room + LiveData + ViewModel with Retrofit for online sync](https://medium.com/@thanasakis/restful-api-consuming-on-android-using-retrofit-and-architecture-components-livedata-room-and-59e3b064f94)

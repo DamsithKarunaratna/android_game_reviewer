@@ -1,10 +1,6 @@
 package com.ctse.androidgamereviewer.data;
 
-import java.sql.Date;
-import java.util.List;
-
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity

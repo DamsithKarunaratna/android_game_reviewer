@@ -1,7 +1,5 @@
 package com.ctse.androidgamereviewer.data;
 
-import java.sql.Date;
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 

@@ -1,4 +1,4 @@
-package com.ctse.androidgamereviewer.data;
+package com.ctse.androidgamereviewer.data.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -9,10 +9,14 @@ public class Game {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    private String _id;
     private String title;
     private String genre;
     private String image;
     private String release_date;
+
+    public Game() {
+    }
 
     public int getId() {
         return id;
@@ -20,6 +24,14 @@ public class Game {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getTitle() {

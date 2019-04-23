@@ -26,11 +26,19 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
         <TextView
-            android:id="@+id/text_view_description"
+            android:id="@+id/text_view_genre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="This is the description of the game right here"
             android:layout_below="@id/text_view_game_title"/>
+
+        <TextView
+            android:id="@+id/text_view_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This is the release date of the game right here"
+            android:layout_below="@id/text_view_genre"/>
+
     </RelativeLayout>
 
 

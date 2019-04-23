@@ -1,10 +1,10 @@
-package com.ctse.androidgamereviewer.data;
+package com.ctse.androidgamereviewer.data.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-class Review {
+public class Review {
 
     @PrimaryKey
     private int id;
@@ -14,6 +14,9 @@ class Review {
     private String body;
     private String date;
     private int rating;
+
+    public Review() {
+    }
 
     public int getId() {
         return id;

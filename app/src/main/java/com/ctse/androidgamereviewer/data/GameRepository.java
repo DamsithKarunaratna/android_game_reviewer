@@ -2,20 +2,47 @@ package com.ctse.androidgamereviewer.data;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.ctse.androidgamereviewer.data.dao.GameDAO;
+import com.ctse.androidgamereviewer.data.entities.Game;
+import com.ctse.androidgamereviewer.data.retrofit.GameWebService;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GameRepository {
 
+    private static int REFRESH_TIMEOUT_IN_MINUTES = 3;
+
     private GameDAO gameDAO;
+    private GameWebService webService;
+    private Executor executor;
+
     private LiveData<List<Game>> allGames;
 
     public GameRepository(Application application) {
         GameDatabase database = GameDatabase.getInstance(application);
         gameDAO = database.gameDAO();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ctse-test-api.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        webService = retrofit.create(GameWebService.class);
+        executor = Executors.newSingleThreadExecutor();
         allGames = gameDAO.getAllGames();
+
+        refreshData();
     }
 
     public void insert(Game game) {
@@ -32,6 +59,23 @@ public class GameRepository {
 
     public LiveData<List<Game>> getAllGames() {
         return allGames;
+    }
+
+    public LiveData<List<Game>> getAllGamesFromWebService() {
+
+        final MutableLiveData<List<Game>> data = new MutableLiveData<>();
+        webService.getGames().enqueue(new Callback<List<Game>>() {
+            @Override
+            public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
+                data.setValue(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Game>> call, Throwable t) {
+                Log.e("gameReviewer", "Retrofit call getGames() failed!!!");
+            }
+        });
+        return data;
     }
 
     private static class InsertGameAsyncTask extends AsyncTask<Game, Void, Void> {
@@ -77,5 +121,34 @@ public class GameRepository {
             gameDAO.delete(games[0]);
             return null;
         }
+    }
+
+    private void refreshData() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                webService.getGames().enqueue(new Callback<List<Game>>() {
+                    @Override
+                    public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
+                        System.out.println("------ GOT CALL FROM REMOTE DB -------");
+                        List<Game> games = response.body();
+                        assert games != null;
+                        for (Game g : games) {
+                            System.out.println(g.getId());
+                            System.out.println(g.getGenre());
+                            System.out.println(g.getTitle());
+                            System.out.println(g.getRelease_date());
+                            System.out.println(g.getImage());
+                            System.out.println(g.get_id());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Game>> call, Throwable t) {
+                        t.printStackTrace();
+                    }
+                });
+            }
+        });
     }
 }

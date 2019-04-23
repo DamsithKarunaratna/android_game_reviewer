@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ctse.androidgamereviewer.data.Game;
+import com.ctse.androidgamereviewer.data.entities.Game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHo
         public GameHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.text_view_game_title);
-            tvDescription = itemView.findViewById(R.id.text_view_description);
+            tvDescription = itemView.findViewById(R.id.text_view_genre);
         }
     }
 }

@@ -17,11 +17,17 @@
         />
 
     <EditText
-        android:id="@+id/edit_text_game_description"
+        android:id="@+id/edit_text_game_genre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Description"
+        android:hint="Genre"
         android:inputType="textMultiLine"
         />
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"/>
+
 
 </LinearLayout>

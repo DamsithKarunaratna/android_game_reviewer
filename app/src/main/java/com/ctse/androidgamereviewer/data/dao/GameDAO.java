@@ -1,4 +1,6 @@
-package com.ctse.androidgamereviewer.data;
+package com.ctse.androidgamereviewer.data.dao;
+
+import com.ctse.androidgamereviewer.data.entities.Game;
 
 import java.util.List;
 

@@ -16,7 +16,7 @@ public class AddGameActivity extends AppCompatActivity {
     public static final String EXTRA_DESCRIPTION = "com.ctse.androidgamereviewer.EXTRA_DESCRIPTION";
 
     private EditText etTitle;
-    private EditText etDescription;
+    private EditText etGenre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class AddGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_game);
 
         etTitle = findViewById(R.id.edit_text_game_title);
-        etDescription = findViewById(R.id.edit_text_game_description);
+        etGenre = findViewById(R.id.edit_text_game_genre);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         setTitle("Add Game");
@@ -50,7 +50,7 @@ public class AddGameActivity extends AppCompatActivity {
 
     private void saveGame() {
         String title = etTitle.getText().toString().trim();
-        String description = etDescription.getText().toString().trim();
+        String description = etGenre.getText().toString().trim();
 
         if(title.isEmpty() || description.isEmpty()) {
             Toast.makeText(this, "Please insert Title and Description",

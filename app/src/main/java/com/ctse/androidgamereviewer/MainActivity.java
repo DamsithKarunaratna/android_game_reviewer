@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.ctse.androidgamereviewer.data.Game;
+import com.ctse.androidgamereviewer.data.entities.Game;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

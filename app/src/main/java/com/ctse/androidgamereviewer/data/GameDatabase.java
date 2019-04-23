@@ -2,6 +2,11 @@ package com.ctse.androidgamereviewer.data;
 
 import android.content.Context;
 
+import com.ctse.androidgamereviewer.data.dao.GameDAO;
+import com.ctse.androidgamereviewer.data.dao.ReviewDAO;
+import com.ctse.androidgamereviewer.data.entities.Game;
+import com.ctse.androidgamereviewer.data.entities.Review;
+
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -9,7 +14,7 @@ import androidx.room.RoomDatabase;
 /**
  * Singleton class to return a GameDatabase
  */
-@Database(entities = {Game.class, Review.class}, version = 1, exportSchema = false)
+@Database(entities = {Game.class, Review.class}, version = 2, exportSchema = false)
 public abstract class GameDatabase extends RoomDatabase {
 
     private static GameDatabase instance;

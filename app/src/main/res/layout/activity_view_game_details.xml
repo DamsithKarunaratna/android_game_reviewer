@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewGameDetails"
+    tools:context=".ViewGameDetailsActivity"
     android:layout_margin="8dp"
     >
 
@@ -17,7 +17,7 @@
         android:paddingStart="8dp"
         android:paddingTop="8dp"
         android:text="This is the Title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView
         android:id="@+id/text_view_genre"

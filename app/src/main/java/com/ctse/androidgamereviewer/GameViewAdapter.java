@@ -43,7 +43,7 @@ public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHo
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, "position: " + position, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, ViewGameDetails.class);
+                Intent intent = new Intent(mContext, ViewGameDetailsActivity.class);
                 mContext.startActivity(intent);
             }
         });

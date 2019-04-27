@@ -20,6 +20,7 @@ public class ViewGameDetails extends AppCompatActivity {
 
     }
 
+    // Action bar back button
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:

@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        final GameViewAdapter adapter = new GameViewAdapter();
+        final GameViewAdapter adapter = new GameViewAdapter(this);
         recyclerView.setAdapter(adapter);
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);

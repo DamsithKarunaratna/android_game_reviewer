@@ -37,4 +37,8 @@ public class GameViewModel extends AndroidViewModel {
     public LiveData<List<Game>> getAllGames() {
         return allGames;
     }
+
+    public GameRepository getGameRepository() {
+        return gameRepository;
+    }
 }

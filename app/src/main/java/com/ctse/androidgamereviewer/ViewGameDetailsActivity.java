@@ -1,5 +1,6 @@
 package com.ctse.androidgamereviewer;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -17,10 +18,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ctse.androidgamereviewer.data.entities.Game;
+import com.ctse.androidgamereviewer.data.entities.Review;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ViewGameDetailsActivity extends AppCompatActivity {
+
+    public static final int ADD_REVIEW_REQUEST = 3;
 
     private GameViewModel gameViewModel;
     private Game game;
@@ -44,7 +51,7 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
         final TextView tvGameGenre = findViewById(R.id.text_view_genre);
         final TextView tvGameReleaseDate = findViewById(R.id.text_view_release_date);
 
-        final int position = getIntent().getIntExtra("position", -1);
+        final int position = getIntent().getIntExtra(GameViewAdapter.EXTRA_POSITION, -1);
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         gameViewModel.getAllGames().observe(this, new Observer<List<Game>>() {
@@ -62,8 +69,7 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ViewGameDetailsActivity.this, AddReviewActivity.class);
-                startActivity(intent);
-                // TODO: Start activity for result
+                startActivityForResult(intent, ADD_REVIEW_REQUEST);
             }
         });
 
@@ -81,5 +87,29 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ADD_REVIEW_REQUEST && resultCode == RESULT_OK) {
+            int rating = data.getIntExtra(AddReviewActivity.EXTRA_REVIEW_RATING, 0);
+            String reviewTitle = data.getStringExtra(AddReviewActivity.EXTRA_REVIEW_TITLE);
+            String reviewBody = data.getStringExtra(AddReviewActivity.EXTRA_REVIEW_BODY);
+
+            Date date = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            Review review = new Review();
+
+            review.setRating(rating);
+            review.setTitle(reviewTitle);
+            review.setBody(reviewBody);
+            review.setDate(dateFormat.format(date.getTime()));
+            review.setGameId(game.getId());
+
+
+        }
     }
 }

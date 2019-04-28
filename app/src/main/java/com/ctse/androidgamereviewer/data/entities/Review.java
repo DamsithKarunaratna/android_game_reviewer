@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Review {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
 
     private int gameId;

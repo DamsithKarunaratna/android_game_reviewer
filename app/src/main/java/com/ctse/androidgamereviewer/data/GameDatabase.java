@@ -14,7 +14,7 @@ import androidx.room.RoomDatabase;
 /**
  * Singleton class to return a GameDatabase
  */
-@Database(entities = {Game.class, Review.class}, version = 2, exportSchema = false)
+@Database(entities = {Game.class, Review.class}, version = 3, exportSchema = false)
 public abstract class GameDatabase extends RoomDatabase {
 
     private static GameDatabase instance;

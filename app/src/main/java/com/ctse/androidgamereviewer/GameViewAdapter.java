@@ -21,6 +21,8 @@ public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHo
     private List<Game> games = new ArrayList<>();
     private Context mContext;
 
+    public static final String EXTRA_POSITION = "com.ctse.androidgamereviewer.POSITION";
+
     public GameViewAdapter(Context mContext) {
         this.mContext = mContext;
     }
@@ -43,7 +45,7 @@ public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ViewGameDetailsActivity.class);
-                intent.putExtra("position", position);
+                intent.putExtra(EXTRA_POSITION, position);
                 mContext.startActivity(intent);
             }
         });

@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
-        android:text="This is the description of the game right here"
+        android:text="This is the genre of the game right here"
         android:layout_below="@id/text_view_game_title"/>
 
     <TextView

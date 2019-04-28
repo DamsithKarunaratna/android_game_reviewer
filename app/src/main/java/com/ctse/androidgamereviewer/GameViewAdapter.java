@@ -35,15 +35,15 @@ public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHo
 
     @Override
     public void onBindViewHolder(@NonNull GameHolder holder, final int position) {
-        Game currentGame = games.get(position);
+        final Game currentGame = games.get(position);
         holder.tvTitle.setText(currentGame.getTitle());
         holder.tvDescription.setText(currentGame.getGenre());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "position: " + position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, ViewGameDetailsActivity.class);
+                intent.putExtra("position", position);
                 mContext.startActivity(intent);
             }
         });

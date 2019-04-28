@@ -93,6 +93,21 @@ public class GameRepository {
         }
     }
 
+    private static class InsertAllGameAsyncTask extends AsyncTask<List<Game>, Void, Void> {
+
+        private GameDAO gameDAO;
+
+        private InsertAllGameAsyncTask(GameDAO gameDAO) {
+            this.gameDAO = gameDAO;
+        }
+
+        @Override
+        protected Void doInBackground(List<Game>... lists) {
+            gameDAO.insertMany(lists[0]);
+            return null;
+        }
+    }
+
     private static class UpdateGameAsyncTask extends AsyncTask<Game, Void, Void> {
 
         private GameDAO gameDAO;
@@ -141,6 +156,8 @@ public class GameRepository {
                             System.out.println(g.getImage());
                             System.out.println(g.get_id());
                         }
+
+                        new InsertAllGameAsyncTask(gameDAO).execute(games);
                     }
 
                     @Override

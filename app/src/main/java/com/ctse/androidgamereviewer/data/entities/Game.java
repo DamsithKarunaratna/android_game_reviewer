@@ -1,15 +1,18 @@
 package com.ctse.androidgamereviewer.data.entities;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(indices = {@Index(value = {"game_title"}, unique = true)})
 public class Game {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
     private String _id;
+    @ColumnInfo(name = "game_title")
     private String title;
     private String genre;
     private String image;

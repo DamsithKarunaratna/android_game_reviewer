@@ -19,6 +19,9 @@ public abstract class GameDAO {
     @Insert(onConflict = REPLACE)
     public abstract void insertGame(Game game);
 
+    @Insert(onConflict = REPLACE)
+    public abstract void insertMany(List<Game> games);
+
     @Update
     public abstract void update(Game game);
 

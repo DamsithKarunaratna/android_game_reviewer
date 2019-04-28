@@ -2,6 +2,7 @@ package com.ctse.androidgamereviewer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,17 +17,28 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final int ADD_GAME_REQUEST = 2;
 
     private GameViewModel gameViewModel;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                System.out.println("SWIPED");
+                gameViewModel.getGameRepository().refreshData(swipeRefreshLayout);
+            }
+        });
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_main);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -56,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == ADD_GAME_REQUEST && resultCode == RESULT_OK) {
+        if (requestCode == ADD_GAME_REQUEST && resultCode == RESULT_OK) {
             String title = data.getStringExtra(AddGameActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddGameActivity.EXTRA_DESCRIPTION);
 

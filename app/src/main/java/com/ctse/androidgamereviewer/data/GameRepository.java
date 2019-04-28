@@ -2,8 +2,6 @@ package com.ctse.androidgamereviewer.data;
 
 import android.app.Application;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.ctse.androidgamereviewer.data.dao.GameDAO;
 import com.ctse.androidgamereviewer.data.entities.Game;
@@ -14,7 +12,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,11 +40,29 @@ public class GameRepository {
         executor = Executors.newSingleThreadExecutor();
         allGames = gameDAO.getAllGames();
 
-        refreshData();
+//        refreshData();
     }
 
-    public void insert(Game game) {
+    public void insert(final Game game) {
         new InsertGameAsyncTask(gameDAO).execute(game);
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                webService.saveGame(game).enqueue(new Callback<Game>() {
+                    @Override
+                    public void onResponse(Call<Game> call, Response<Game> response) {
+                        System.out.println("Game saved to online DB");
+                        System.out.println(response.body().toString());
+                    }
+
+                    @Override
+                    public void onFailure(Call<Game> call, Throwable t) {
+                        System.out.println("Game not saved");
+                        t.printStackTrace();
+                    }
+                });
+            }
+        });
     }
 
     public void update(Game game) {
@@ -59,23 +75,6 @@ public class GameRepository {
 
     public LiveData<List<Game>> getAllGames() {
         return allGames;
-    }
-
-    public LiveData<List<Game>> getAllGamesFromWebService() {
-
-        final MutableLiveData<List<Game>> data = new MutableLiveData<>();
-        webService.getGames().enqueue(new Callback<List<Game>>() {
-            @Override
-            public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
-                data.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<List<Game>> call, Throwable t) {
-                Log.e("gameReviewer", "Retrofit call getGames() failed!!!");
-            }
-        });
-        return data;
     }
 
     private static class InsertGameAsyncTask extends AsyncTask<Game, Void, Void> {
@@ -138,7 +137,9 @@ public class GameRepository {
         }
     }
 
-    private void refreshData() {
+    public void refreshData(final SwipeRefreshLayout swipeRefreshLayout) {
+
+        System.out.println("refreshData() called");
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -156,12 +157,14 @@ public class GameRepository {
                             System.out.println(g.getImage());
                             System.out.println(g.get_id());
                         }
-
+                        swipeRefreshLayout.setRefreshing(false);
                         new InsertAllGameAsyncTask(gameDAO).execute(games);
                     }
 
                     @Override
                     public void onFailure(Call<List<Game>> call, Throwable t) {
+                        swipeRefreshLayout.setRefreshing(false);
+                        System.out.println("FAILURE IN DB CALL");
                         t.printStackTrace();
                     }
                 });

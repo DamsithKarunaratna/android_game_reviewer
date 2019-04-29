@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ctse.androidgamereviewer.data.entities.Game;
 import com.ctse.androidgamereviewer.data.entities.Review;
@@ -30,6 +31,7 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
     public static final int ADD_REVIEW_REQUEST = 3;
 
     private GameViewModel gameViewModel;
+    private ReviewViewModel reviewViewModel;
     private Game game;
 
     // UI elements
@@ -63,6 +65,8 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
                 tvGameReleaseDate.setText(game.getRelease_date());
             }
         });
+
+        reviewViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
 
         Button addReviewButton = findViewById(R.id.button_add_review);
         addReviewButton.setOnClickListener(new View.OnClickListener() {
@@ -107,9 +111,14 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
             review.setTitle(reviewTitle);
             review.setBody(reviewBody);
             review.setDate(dateFormat.format(date.getTime()));
-            review.setGameId(game.getId());
+            review.setGameId(game.get_id());
 
+            reviewViewModel.insert(review);
 
+            Toast.makeText(this, "Review Saved", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(this, "Review did not saved", Toast.LENGTH_SHORT).show();
         }
     }
 }

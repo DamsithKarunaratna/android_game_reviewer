@@ -9,7 +9,7 @@ public class Review {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private int gameId;
+    private String gameId;
     private String title;
     private String body;
     private String date;
@@ -26,11 +26,11 @@ public class Review {
         this.id = id;
     }
 
-    public int getGameId() {
+    public String getGameId() {
         return gameId;
     }
 
-    public void setGameId(int gameId) {
+    public void setGameId(String gameId) {
         this.gameId = gameId;
     }
 

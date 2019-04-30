@@ -5,6 +5,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +27,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ViewGameDetailsActivity extends AppCompatActivity {
 
@@ -54,6 +57,13 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
         final TextView tvGameReleaseDate = findViewById(R.id.text_view_release_date);
 
         final int position = getIntent().getIntExtra(GameViewAdapter.EXTRA_POSITION, -1);
+        final String gameId = getIntent().getStringExtra(GameViewAdapter.EXTRA_GAME_ID);
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_view_reviews);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        final ReviewViewAdapter adapter = new ReviewViewAdapter(this);
+        recyclerView.setAdapter(adapter);
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         gameViewModel.getAllGames().observe(this, new Observer<List<Game>>() {
@@ -67,6 +77,13 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
         });
 
         reviewViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
+        reviewViewModel.getReviewForGame(gameId).observe(this, new Observer<List<Review>>() {
+            @Override
+            public void onChanged(List<Review> reviews) {
+                Log.d("GAME ID", "onChanged: " + gameId);
+                adapter.setReviews(reviews);
+            }
+        });
 
         Button addReviewButton = findViewById(R.id.button_add_review);
         addReviewButton.setOnClickListener(new View.OnClickListener() {

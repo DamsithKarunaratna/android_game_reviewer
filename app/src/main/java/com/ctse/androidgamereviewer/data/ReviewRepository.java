@@ -17,11 +17,12 @@ public class ReviewRepository {
     private ReviewDAO reviewDAO;
     private GameWebService gameWebService;
     private Executor executor;
+    private GameDatabase database;
 
     private LiveData<List<Review>> allReviews;
 
     public ReviewRepository(Application application) {
-        GameDatabase database = GameDatabase.getInstance(application);
+        database = GameDatabase.getInstance(application);
         reviewDAO = database.reviewDAO();
 
         // TODO: get reviews from remote db
@@ -43,6 +44,10 @@ public class ReviewRepository {
 
     public LiveData<List<Review>> getAllReviews() {
         return allReviews;
+    }
+
+    public LiveData<List<Review>> getReviewsForGame(String game_id) {
+        return database.reviewDAO().getReviewsByGameId(game_id);
     }
 
     private static class InsertReviewAsyncTask extends AsyncTask<Review, Void, Void> {

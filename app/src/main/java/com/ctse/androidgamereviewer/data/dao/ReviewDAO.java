@@ -26,7 +26,7 @@ public abstract class ReviewDAO {
     public abstract void delete(Review review);
 
     @Query("SELECT * FROM Review WHERE gameId =:gameId")
-    public abstract LiveData<List<Review>> getReviewsByGameId(int gameId);
+    public abstract LiveData<List<Review>> getReviewsByGameId(String gameId);
 
     @Query("SELECT * FROM Review")
     public abstract LiveData<List<Review>> getAllReviews();

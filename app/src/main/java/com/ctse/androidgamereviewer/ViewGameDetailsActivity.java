@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,12 +40,6 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
     private ReviewViewModel reviewViewModel;
     private Game game;
 
-    // UI elements
-    ImageView ivGameImage;
-
-
-    // TODO: Implement RecyclerView for reviews
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +52,7 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
         final TextView tvGameTitle = findViewById(R.id.text_view_game_title);
         final TextView tvGameGenre = findViewById(R.id.text_view_genre);
         final TextView tvGameReleaseDate = findViewById(R.id.text_view_release_date);
+        final ImageView ivGameImage = findViewById(R.id.image_view_game_image);
 
         final int position = getIntent().getIntExtra(GameViewAdapter.EXTRA_POSITION, -1);
         final String gameId = getIntent().getStringExtra(GameViewAdapter.EXTRA_GAME_ID);
@@ -73,6 +71,7 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
                 tvGameTitle.setText(game.getTitle());
                 tvGameGenre.setText(game.getGenre());
                 tvGameReleaseDate.setText(game.getRelease_date());
+                ivGameImage.setImageBitmap(decodeBase64(game.getImage()));
             }
         });
 
@@ -94,6 +93,12 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // ImageView decode
+    public Bitmap decodeBase64(String base64) {
+        byte [] decodedString = Base64.decode(base64, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
     // Action bar back button

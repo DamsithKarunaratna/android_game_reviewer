@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import org.bson.types.ObjectId;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final int ADD_GAME_REQUEST = 2;
@@ -77,8 +79,11 @@ public class MainActivity extends AppCompatActivity {
             String description = data.getStringExtra(AddGameActivity.EXTRA_DESCRIPTION);
 
             Game game = new Game();
+            ObjectId objectId = new ObjectId();
+
             game.setTitle(title);
             game.setGenre(description);
+            game.set_id(objectId.toString());
 
             gameViewModel.insert(game);
 

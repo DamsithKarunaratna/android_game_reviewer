@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int ADD_GAME_REQUEST = 2;
 
     private GameViewModel gameViewModel;
+    private ReviewViewModel reviewViewModel;
     SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
         final GameViewAdapter adapter = new GameViewAdapter(this);
         recyclerView.setAdapter(adapter);
+
+        reviewViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
+        reviewViewModel.getReviewRepository().refreshReviews();
 
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         gameViewModel.getAllGames().observe(this, new Observer<List<Game>>() {

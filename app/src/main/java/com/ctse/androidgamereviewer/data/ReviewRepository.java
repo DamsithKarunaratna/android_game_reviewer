@@ -2,6 +2,7 @@ package com.ctse.androidgamereviewer.data;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.ctse.androidgamereviewer.data.dao.ReviewDAO;
 import com.ctse.androidgamereviewer.data.entities.Review;
@@ -9,13 +10,20 @@ import com.ctse.androidgamereviewer.data.retrofit.GameWebService;
 
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ReviewRepository {
 
     private ReviewDAO reviewDAO;
-    private GameWebService gameWebService;
+    private GameWebService webService;
     private Executor executor;
     private GameDatabase database;
 
@@ -25,13 +33,39 @@ public class ReviewRepository {
         database = GameDatabase.getInstance(application);
         reviewDAO = database.reviewDAO();
 
-        // TODO: get reviews from remote db
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ctse-test-api.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        webService = retrofit.create(GameWebService.class);
+        executor = Executors.newSingleThreadExecutor();
 
         allReviews = reviewDAO.getAllReviews();
     }
 
     public void insert(final Review review) {
         new InsertReviewAsyncTask(reviewDAO).execute(review);
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                webService.saveReview(review).enqueue(new Callback<Review>() {
+                    @Override
+                    public void onResponse(Call<Review> call, Response<Review> response) {
+                        System.out.println("Game saved to online DB");
+                        System.out.println(response.body().toString());
+                        Log.d("ReviewRepository", "onResponse: Game saved to online DB");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Review> call, Throwable t) {
+                        System.out.println("Game not saved");
+                        Log.d("ReviewRepository", "onResponse: Game not saved");
+                        t.printStackTrace();
+                    }
+                });
+            }
+        });
     }
 
     public void update(Review review) {
@@ -61,6 +95,21 @@ public class ReviewRepository {
         @Override
         protected Void doInBackground(Review... reviews) {
             reviewDAO.insertReview(reviews[0]);
+            return null;
+        }
+    }
+
+    private static class InsertAllReviewsAsyncTask extends AsyncTask<List<Review>, Void, Void> {
+
+        private ReviewDAO reviewDAO;
+
+        public InsertAllReviewsAsyncTask(ReviewDAO reviewDAO) {
+            this.reviewDAO = reviewDAO;
+        }
+
+        @Override
+        protected Void doInBackground(List<Review>... lists) {
+            reviewDAO.insertMany(lists[0]);
             return null;
         }
     }
@@ -95,8 +144,39 @@ public class ReviewRepository {
         }
     }
 
+    public void refreshReviews() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                webService.getReviews().enqueue(new Callback<List<Review>>() {
+                    @Override
+                    public void onResponse(Call<List<Review>> call, Response<List<Review>> response) {
+                        System.out.println("------ GOT CALL FROM REMOTE DB -------");
+                        Log.d("ReviewRepository", "onResponse: GOT CALL FROM REMOTE DB");
+                        List<Review> reviews = response.body();
+                        assert response != null;
+                        for (Review r : reviews) {
+                            System.out.println(r.get_id());
+                            System.out.println(r.getBody());
+                            System.out.println(r.getDate());
+                            System.out.println(r.getGameId());
+                            System.out.println(r.getId());
+                            System.out.println(r.getRating());
+                            System.out.println(r.getTitle());
+                        }
 
-    // TODO: implement insert all reviews task
-    // TODO: implement refresh database
+                        new InsertAllReviewsAsyncTask(reviewDAO).execute(reviews);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Review>> call, Throwable t) {
+                        System.out.println("FAILURE IN DB CALL");
+                        Log.d("ReviewRepository", "onResponse: FAILURE IN DB CALL");
+                        t.printStackTrace();
+                    }
+                });
+            }
+        });
+    }
 
 }

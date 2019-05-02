@@ -2,6 +2,7 @@ package com.ctse.androidgamereviewer.data;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.ctse.androidgamereviewer.data.dao.GameDAO;
 import com.ctse.androidgamereviewer.data.entities.Game;
@@ -26,11 +27,12 @@ public class GameRepository {
     private GameDAO gameDAO;
     private GameWebService webService;
     private Executor executor;
+    private GameDatabase database;
 
     private LiveData<List<Game>> allGames;
 
     public GameRepository(Application application) {
-        GameDatabase database = GameDatabase.getInstance(application);
+        database = GameDatabase.getInstance(application);
         gameDAO = database.gameDAO();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://ctse-test-api.herokuapp.com/")
@@ -147,6 +149,7 @@ public class GameRepository {
                     @Override
                     public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
                         System.out.println("------ GOT CALL FROM REMOTE DB -------");
+                        Log.d("GameRepository", "onResponse: GOT CALL FROM REMOTE DB");
                         List<Game> games = response.body();
                         assert games != null;
                         for (Game g : games) {

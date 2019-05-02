@@ -71,7 +71,7 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
                 tvGameTitle.setText(game.getTitle());
                 tvGameGenre.setText(game.getGenre());
                 tvGameReleaseDate.setText(game.getRelease_date());
-                ivGameImage.setImageBitmap(decodeBase64(game.getImage()));
+//                ivGameImage.setImageBitmap(decodeBase64(game.getImage()));
             }
         });
 

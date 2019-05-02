@@ -19,6 +19,9 @@ public abstract class ReviewDAO {
     @Insert(onConflict = REPLACE)
     public abstract void insertReview(Review review);
 
+    @Insert(onConflict = REPLACE)
+    public abstract void insertMany(List<Review> reviews);
+
     @Update
     public abstract void update(Review review);
 

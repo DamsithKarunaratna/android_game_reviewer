@@ -1,14 +1,17 @@
 package com.ctse.androidgamereviewer.data.entities;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(indices = {@Index(value = {"remote_id"}, unique = true)})
 public class Review {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @ColumnInfo(name = "remote_id")
     private String _id;
     private String gameId;
     private String title;

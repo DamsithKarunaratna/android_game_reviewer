@@ -26,6 +26,8 @@ import android.widget.Toast;
 import com.ctse.androidgamereviewer.data.entities.Game;
 import com.ctse.androidgamereviewer.data.entities.Review;
 
+import org.bson.types.ObjectId;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -128,12 +130,14 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             Review review = new Review();
+            ObjectId objectId = new ObjectId();
 
             review.setRating(rating);
             review.setTitle(reviewTitle);
             review.setBody(reviewBody);
             review.setDate(dateFormat.format(date.getTime()));
             review.setGameId(game.get_id());
+            review.set_id(objectId.toString());
 
             reviewViewModel.insert(review);
 

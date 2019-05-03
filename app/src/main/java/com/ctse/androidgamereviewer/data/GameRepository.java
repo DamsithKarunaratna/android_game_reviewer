@@ -57,7 +57,7 @@ public class GameRepository {
                     @Override
                     public void onResponse(Call<Game> call, Response<Game> response) {
                         System.out.println("Game saved to online DB");
-                        System.out.println(response.body().toString());
+//                        System.out.println(response.body().toString());
                     }
 
                     @Override

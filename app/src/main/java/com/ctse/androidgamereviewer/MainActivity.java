@@ -78,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
             String title = data.getStringExtra(AddGameActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddGameActivity.EXTRA_DESCRIPTION);
             String releaseDate = data.getStringExtra(AddGameActivity.EXTRA_RELEASE_DATE);
+            String image = data.getStringExtra(AddGameActivity.EXTRA_IMAGE);
+
+            System.out.println("image " + image);
 
             Game game = new Game();
             ObjectId objectId = new ObjectId();
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             game.setTitle(title);
             game.setGenre(description);
             game.setRelease_date(releaseDate);
+            game.setImage(image);
             game.set_id(objectId.toString());
 
             gameViewModel.insert(game);

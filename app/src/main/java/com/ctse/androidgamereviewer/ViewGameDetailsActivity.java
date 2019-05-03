@@ -73,7 +73,10 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
                 tvGameTitle.setText(game.getTitle());
                 tvGameGenre.setText(game.getGenre());
                 tvGameReleaseDate.setText(game.getRelease_date());
-//                ivGameImage.setImageBitmap(decodeBase64(game.getImage()));
+                Bitmap bmp = decodeBase64(game.getImage());
+                if(bmp != null) {
+                    ivGameImage.setImageBitmap(bmp);
+                }
             }
         });
 
@@ -99,8 +102,14 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
 
     // ImageView decode
     public Bitmap decodeBase64(String base64) {
-        byte [] decodedString = Base64.decode(base64, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        if(base64 != null) {
+            byte [] decodedString = Base64.decode(base64, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        }
+
+        else return null;
+
     }
 
     // Action bar back button

@@ -1,19 +1,29 @@
 package com.ctse.androidgamereviewer;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.tsongkha.spinnerdatepicker.DatePicker;
 import com.tsongkha.spinnerdatepicker.DatePickerDialog;
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
 
+
+import java.io.ByteArrayOutputStream;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AddGameActivity extends AppCompatActivity implements
@@ -22,10 +32,13 @@ public class AddGameActivity extends AppCompatActivity implements
     public static final String EXTRA_TITLE = "com.ctse.androidgamereviewer.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.ctse.androidgamereviewer.EXTRA_DESCRIPTION";
     public static final String EXTRA_RELEASE_DATE = "com.ctse.androidgamereviewer.EXTRA_RELEASE_DATE";
+    public static final String EXTRA_IMAGE = "com.ctse.androidgamereviewer.EXTRA_IMAGE";
+    public static final int GALLERY_REQUEST_CODE = 12;
 
     private EditText etTitle;
     private EditText etGenre;
     private EditText etDate;
+    private ImageView imageView;
     private ImageButton imageButton;
 
     DatePickerDialog datePickerDialog;
@@ -39,6 +52,7 @@ public class AddGameActivity extends AppCompatActivity implements
         etGenre = findViewById(R.id.edit_text_game_genre);
         etDate = findViewById(R.id.edit_text_date);
         imageButton = findViewById(R.id.btn_open_date_picker);
+        imageView = findViewById(R.id.image_view_game_image);
 
         datePickerDialog = new SpinnerDatePickerDialogBuilder()
                 .context(AddGameActivity.this)
@@ -57,6 +71,13 @@ public class AddGameActivity extends AppCompatActivity implements
 
                 datePickerDialog.show();
 
+            }
+        });
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickImageFromGallery();
             }
         });
 
@@ -82,6 +103,56 @@ public class AddGameActivity extends AppCompatActivity implements
         }
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        etDate.setText(getFormattedDate(year, monthOfYear, dayOfMonth));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Result code is RESULT_OK only if the user selects an Image
+        if (resultCode == Activity.RESULT_OK)
+            switch (requestCode){
+                case GALLERY_REQUEST_CODE:
+                    //data.getData returns the content URI for the selected Image
+                    Uri selectedImage = data.getData();
+                    imageView.setImageURI(selectedImage);
+
+//                    System.out.println("Base 64 image : " +
+//                            getBase64Image((BitmapDrawable) imageView.getDrawable()));
+                    break;
+            }
+    }
+
+    private String getBase64Image(BitmapDrawable drawable) {
+        Bitmap bitmap = drawable.getBitmap();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,90,bos);
+        byte[] bb = bos.toByteArray();
+//        return Base64.encodeToString(bb, 0);
+        return Base64.encodeToString(bb, Base64.NO_WRAP);
+    }
+
+
+    /**
+     * See <a href="https://androidclarified.com/pick-image-gallery-camera-android/">
+     *          this article
+     *     </a>
+     */
+    private void pickImageFromGallery(){
+        //Create an implicit Intent with action as ACTION_PICK
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        // Sets the type as image/*. This ensures only components of type image are selected
+        intent.setType("image/*");
+        /* We pass an extra array with the accepted mime types. This will ensure only components
+        with these MIME types as targeted. */
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        // Launching the Intent
+        startActivityForResult(intent, GALLERY_REQUEST_CODE);
+    }
+
     private void saveGame() {
         String title = etTitle.getText().toString().trim();
         String description = etGenre.getText().toString().trim();
@@ -101,6 +172,8 @@ public class AddGameActivity extends AppCompatActivity implements
         saveGameIntent.putExtra(EXTRA_TITLE, title);
         saveGameIntent.putExtra(EXTRA_DESCRIPTION, description);
         saveGameIntent.putExtra(EXTRA_RELEASE_DATE, releaseDate);
+        saveGameIntent.putExtra(EXTRA_IMAGE, getBase64Image(
+                (BitmapDrawable) imageView.getDrawable()));
 
         setResult(RESULT_OK, saveGameIntent);
         finish();
@@ -156,8 +229,5 @@ public class AddGameActivity extends AppCompatActivity implements
         return date;
     }
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        etDate.setText(getFormattedDate(year, monthOfYear, dayOfMonth));
-    }
+
 }

@@ -46,7 +46,10 @@ public class GameRepository {
     }
 
     public void insert(final Game game) {
+        // Insert game into local SQLite Database
         new InsertGameAsyncTask(gameDAO).execute(game);
+
+        // Thread to insert game into remote MongoDB database
         executor.execute(new Runnable() {
             @Override
             public void run() {

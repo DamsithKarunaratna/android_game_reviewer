@@ -77,12 +77,14 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == ADD_GAME_REQUEST && resultCode == RESULT_OK) {
             String title = data.getStringExtra(AddGameActivity.EXTRA_TITLE);
             String description = data.getStringExtra(AddGameActivity.EXTRA_DESCRIPTION);
+            String releaseDate = data.getStringExtra(AddGameActivity.EXTRA_RELEASE_DATE);
 
             Game game = new Game();
             ObjectId objectId = new ObjectId();
 
             game.setTitle(title);
             game.setGenre(description);
+            game.setRelease_date(releaseDate);
             game.set_id(objectId.toString());
 
             gameViewModel.insert(game);

@@ -13,21 +13,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Title"
-        android:inputType="text"
-        />
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/edit_text_game_genre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Genre"
-        android:inputType="textMultiLine"
-        />
+        android:inputType="textMultiLine" />
 
-    <DatePicker
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:datePickerMode="spinner"/>
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edit_text_date"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:hint="Release Date"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date" />
+
+        <ImageButton
+            android:id="@+id/btn_open_date_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_date_range_grey"
+            />
+    </LinearLayout>
 
 
 </LinearLayout>

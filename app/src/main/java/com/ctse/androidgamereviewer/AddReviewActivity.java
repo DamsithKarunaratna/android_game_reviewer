@@ -1,9 +1,5 @@
 package com.ctse.androidgamereviewer;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +10,9 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AddReviewActivity extends AppCompatActivity {
 

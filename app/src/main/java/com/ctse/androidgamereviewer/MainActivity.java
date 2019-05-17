@@ -15,6 +15,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.bson.types.ObjectId;
+
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -25,8 +27,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import org.bson.types.ObjectId;
 
 /**
  * This is the main activity of the app and will be the activity which is shown on launch.

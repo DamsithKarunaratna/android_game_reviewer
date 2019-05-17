@@ -2,8 +2,8 @@ package com.ctse.androidgamereviewer;
 
 import android.app.Application;
 
-import com.ctse.androidgamereviewer.data.entities.Game;
 import com.ctse.androidgamereviewer.data.GameRepository;
+import com.ctse.androidgamereviewer.data.entities.Game;
 
 import java.util.List;
 

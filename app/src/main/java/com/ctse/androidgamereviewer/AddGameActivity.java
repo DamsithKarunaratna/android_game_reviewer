@@ -20,7 +20,6 @@ import com.tsongkha.spinnerdatepicker.DatePicker;
 import com.tsongkha.spinnerdatepicker.DatePickerDialog;
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
 
-
 import java.io.ByteArrayOutputStream;
 
 import androidx.annotation.Nullable;

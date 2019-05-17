@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "860940076344",
+    "firebase_url": "https://ctse-game-reviewer.firebaseio.com",
+    "project_id": "ctse-game-reviewer",
+    "storage_bucket": "ctse-game-reviewer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860940076344:android:12624dbecdafbc9d",
+        "android_client_info": {
+          "package_name": "com.ctse.androidgamereviewer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860940076344-57ads8b571bjd0br9mnm732ggs7a0eg9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3yQ8TRHFWukWlz2bAjwazWtIVXKi8F0c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860940076344-57ads8b571bjd0br9mnm732ggs7a0eg9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

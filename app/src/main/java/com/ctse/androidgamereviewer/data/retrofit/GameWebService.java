@@ -7,6 +7,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -25,6 +26,9 @@ public interface GameWebService {
 
     @PUT("/reviews/{review_id}")
     Call<Review> updateReview(@Path("review_id") String review_id, @Body Review review);
+
+    @DELETE("/reviews/{review_id}")
+    Call<Review> deleteReview(@Path("review_id") String review_id);
 
     @GET("reviews/")
     Call<List<Review>> getReviews();

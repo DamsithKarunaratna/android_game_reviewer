@@ -65,14 +65,16 @@ public class ViewReviewActivity extends AppCompatActivity {
         reviewViewModel.getReviewById(reviewId).observe(this, new Observer<Review>() {
             @Override
             public void onChanged(Review review) {
-                tvReviewBody.setText(review.getBody());
-                tvReviewTitle.setText(review.getTitle());
-                ratingBar.setRating(review.getRating());
+                if (null != review) {
+                    tvReviewBody.setText(review.getBody());
+                    tvReviewTitle.setText(review.getTitle());
+                    ratingBar.setRating(review.getRating());
 
-                if (null != user && user.getEmail().equals(review.getUserEmail())) {
-                    linearLayout.setVisibility(View.VISIBLE);
-                } else {
-                    linearLayout.setVisibility(View.INVISIBLE);
+                    if (null != user && user.getEmail().equals(review.getUserEmail())) {
+                        linearLayout.setVisibility(View.VISIBLE);
+                    } else {
+                        linearLayout.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         });
@@ -84,6 +86,18 @@ public class ViewReviewActivity extends AppCompatActivity {
                 intent.putExtra(ReviewViewAdapter.EXTRA_REVIEW_ID, reviewId);
                 intent.putExtra(MainActivity.REVIEW_REQUEST_CODE, EDIT_REVIEW_REQUEST);
                 startActivityForResult(intent, EDIT_REVIEW_REQUEST);
+            }
+        });
+
+        buttonDeleteReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Review review = new Review();
+                review.set_id(reviewId);
+                review.setId(reviewLocalId);
+
+                reviewViewModel.delete(review);
+                finish();
             }
         });
     }
@@ -112,7 +126,6 @@ public class ViewReviewActivity extends AppCompatActivity {
             review.setId(reviewLocalId);
 
             reviewViewModel.update(review);
-//            reviewViewModel.insert(review);
 
             Toast.makeText(this, "Review Saved", Toast.LENGTH_SHORT).show();
 

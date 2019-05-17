@@ -113,9 +113,9 @@ public class ReviewRepository {
                 webService.updateReview(review.get_id(), review).enqueue(new Callback<Review>() {
                     @Override
                     public void onResponse(Call<Review> call, Response<Review> response) {
-                        System.out.println("Game edited on online DB");
+                        System.out.println("Review edited on online DB");
                         System.out.println(response.body().toString());
-                        Log.d("ReviewRepository", "onResponse: Game edited on online DB");
+                        Log.d("ReviewRepository", "onResponse: Review edited on online DB");
                     }
 
                     @Override
@@ -129,8 +129,29 @@ public class ReviewRepository {
         });
     }
 
-    public void delete(Review review) {
+    public void delete(final Review review) {
         new DeleteReviewAsyncTask(reviewDAO).execute(review);
+
+        executor.execute((new Runnable() {
+            @Override
+            public void run() {
+                webService.deleteReview(review.get_id()).enqueue(new Callback<Review>() {
+                    @Override
+                    public void onResponse(Call<Review> call, Response<Review> response) {
+                        System.out.println("Review deleted online DB");
+                        System.out.println(response.body().toString());
+                        Log.d("ReviewRepository", "onResponse: Review deleted online DB");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Review> call, Throwable t) {
+                        System.out.println("Review not deleted");
+                        Log.d("ReviewRepository", "onResponse: Review not deleted");
+                        t.printStackTrace();
+                    }
+                });
+            }
+        }));
     }
 
     public LiveData<List<Review>> getAllReviews() {

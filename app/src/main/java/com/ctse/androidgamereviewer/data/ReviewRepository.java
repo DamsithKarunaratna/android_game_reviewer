@@ -104,8 +104,29 @@ public class ReviewRepository {
         });
     }
 
-    public void update(Review review) {
+    public void update(final Review review) {
         new UpdateReviewAsyncTask(reviewDAO).execute(review);
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                webService.updateReview(review.get_id(), review).enqueue(new Callback<Review>() {
+                    @Override
+                    public void onResponse(Call<Review> call, Response<Review> response) {
+                        System.out.println("Game edited on online DB");
+                        System.out.println(response.body().toString());
+                        Log.d("ReviewRepository", "onResponse: Game edited on online DB");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Review> call, Throwable t) {
+                        System.out.println("Game not edited");
+                        Log.d("ReviewRepository", "onResponse: Game not edited");
+                        t.printStackTrace();
+                    }
+                });
+            }
+        });
     }
 
     public void delete(Review review) {

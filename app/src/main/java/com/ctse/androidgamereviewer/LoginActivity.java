@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Login clicked");
                 startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()

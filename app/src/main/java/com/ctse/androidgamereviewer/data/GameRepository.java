@@ -84,7 +84,7 @@ public class GameRepository {
      * well as the remote database. To avoid blocking the main thread, database operations are
      * carried out on separate threads. This enables a smooth user experience.
      *
-     * @param game entity object to be persisited
+     * @param game entity object to be persisted
      */
     public void insert(final Game game) {
         // Insert game into local SQLite Database asynchronously
@@ -97,13 +97,12 @@ public class GameRepository {
                 webService.saveGame(game).enqueue(new Callback<Game>() {
                     @Override
                     public void onResponse(Call<Game> call, Response<Game> response) {
-                        System.out.println("Game saved to online DB");
-//                        System.out.println(response.body().toString());
+                        Log.d("gameApp", "Game saved to online DB");
                     }
 
                     @Override
                     public void onFailure(Call<Game> call, Throwable t) {
-                        System.out.println("Game not saved");
+                        Log.d("gameApp", "Game not saved");
                         t.printStackTrace();
                     }
                 });
@@ -211,7 +210,7 @@ public class GameRepository {
                     @Override
                     public void onFailure(Call<List<Game>> call, Throwable t) {
                         swipeRefreshLayout.setRefreshing(false);
-                        System.out.println("FAILURE IN DB CALL");
+                        Log.d("gameApp","FAILURE IN DB CALL");
                         t.printStackTrace();
                     }
                 });

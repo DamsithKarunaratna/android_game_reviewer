@@ -19,13 +19,46 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * The Repository class is the highest level of abstraction for persistent data operations.
+ * It acts as a mediator between the local Room-SQLite-database and the remote MongoDB database.
+ * It provides a clean API so that the rest of the app can create update delete and retrieve data
+ * easily without worrying about handling multiple databases.
+ * <p>
+ * See <a href="https://developer.android.com/jetpack/docs/guide">
+ * Official android architecture guide</a> for more information.
+ */
 public class ReviewRepository {
 
+    /**
+     * ReviewDAO is Room Data access object for handling local DB operations
+     *
+     * @see androidx.room.Dao
+     */
     private ReviewDAO reviewDAO;
+    /**
+     * GameWebservice Retrofit webservice for handling remote DB  operations
+     */
     private GameWebService webService;
+    /**
+     * Executor For handling concurrent tasks
+     */
     private Executor executor;
+    /**
+     * GameDatabase is a Room Database class which creates instances of Data Access Objects
+     */
     private GameDatabase database;
 
+    /**
+     * List of games is stored with the LiveData wrapper. LiveData follows the Observer pattern
+     * and notifies the View whenever the data changes. LiveData is lifecycle aware and hence will
+     * not update Observers which are in an inactive state.
+     * <p>
+     * See <a href="https://developer.android.com/topic/libraries/architecture/livedata">
+     * LiveData Documentation</a> for more information.
+     *
+     * @see LiveData
+     */
     private LiveData<List<Review>> allReviews;
 
     public ReviewRepository(Application application) {
@@ -42,6 +75,13 @@ public class ReviewRepository {
         allReviews = reviewDAO.getAllReviews();
     }
 
+    /**
+     * inserts a new review object into the database. Game is inserted into the local database as
+     * well as the remote database. To avoid blocking the main thread, database operations are
+     * carried out on separate threads. This enables a smooth user experience.
+     *
+     * @param review review object to be persisted.
+     */
     public void insert(final Review review) {
         new InsertReviewAsyncTask(reviewDAO).execute(review);
 
@@ -51,14 +91,11 @@ public class ReviewRepository {
                 webService.saveReview(review).enqueue(new Callback<Review>() {
                     @Override
                     public void onResponse(Call<Review> call, Response<Review> response) {
-                        System.out.println("Game saved to online DB");
-                        System.out.println(response.body().toString());
                         Log.d("ReviewRepository", "onResponse: Game saved to online DB");
                     }
 
                     @Override
                     public void onFailure(Call<Review> call, Throwable t) {
-                        System.out.println("Game not saved");
                         Log.d("ReviewRepository", "onResponse: Game not saved");
                         t.printStackTrace();
                     }
@@ -143,6 +180,9 @@ public class ReviewRepository {
         }
     }
 
+    /**
+     * Refresh the list of reviews from the remote database.
+     */
     public void refreshReviews() {
         executor.execute(new Runnable() {
             @Override
@@ -150,26 +190,14 @@ public class ReviewRepository {
                 webService.getReviews().enqueue(new Callback<List<Review>>() {
                     @Override
                     public void onResponse(Call<List<Review>> call, Response<List<Review>> response) {
-                        System.out.println("------ GOT CALL FROM REMOTE DB -------");
                         Log.d("ReviewRepository", "onResponse: GOT CALL FROM REMOTE DB");
                         List<Review> reviews = response.body();
                         assert response != null;
-                        for (Review r : reviews) {
-                            System.out.println(r.get_id());
-                            System.out.println(r.getBody());
-                            System.out.println(r.getDate());
-                            System.out.println(r.getGameId());
-                            System.out.println(r.getId());
-                            System.out.println(r.getRating());
-                            System.out.println(r.getTitle());
-                        }
-
                         new InsertAllReviewsAsyncTask(reviewDAO).execute(reviews);
                     }
 
                     @Override
                     public void onFailure(Call<List<Review>> call, Throwable t) {
-                        System.out.println("FAILURE IN DB CALL");
                         Log.d("ReviewRepository", "onResponse: FAILURE IN DB CALL");
                         t.printStackTrace();
                     }

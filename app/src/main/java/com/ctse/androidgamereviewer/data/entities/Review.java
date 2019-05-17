@@ -5,6 +5,14 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+/**
+ * Room performs Object Relational Mapping and the @Entity annotation ensures that
+ * the Review entity class is mapped to the relevant SQLite table in the database.
+ *
+ * @see Entity
+ * <a href="https://developer.android.com/topic/libraries/architecture/room">
+ * Official Room Documentation</a>
+ */
 @Entity(indices = {@Index(value = {"remote_id"}, unique = true)})
 public class Review {
 

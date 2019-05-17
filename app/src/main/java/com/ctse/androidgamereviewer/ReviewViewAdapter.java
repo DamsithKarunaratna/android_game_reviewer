@@ -1,6 +1,7 @@
 package com.ctse.androidgamereviewer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ public class ReviewViewAdapter extends RecyclerView.Adapter<ReviewViewAdapter.Re
 
     private List<Review> reviews = new ArrayList<>();
     private Context mContext;
+
+    public static final String EXTRA_REVIEW_ID = "com.ctse.androidgamereviewer.REVIEW_ID";
 
     public ReviewViewAdapter(Context mContext) {
         this.mContext = mContext;
@@ -37,6 +40,15 @@ public class ReviewViewAdapter extends RecyclerView.Adapter<ReviewViewAdapter.Re
         holder.tvReviewDate.setText(currentReview.getDate());
         holder.tvReviewBody.setText(currentReview.getBody());
         holder.tvRating.setText(currentReview.getRating() + "/5");
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ViewReviewActivity.class);
+                intent.putExtra(EXTRA_REVIEW_ID, currentReview.get_id());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override

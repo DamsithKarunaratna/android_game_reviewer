@@ -42,6 +42,10 @@ public class ReviewViewModel extends AndroidViewModel {
         return reviewRepository.getReviewsForGame(game_id);
     }
 
+    public LiveData<Review> getReviewById(String review_id) {
+        return reviewRepository.getReviewById(review_id);
+    }
+
     public ReviewRepository getReviewRepository() {
         return reviewRepository;
     }

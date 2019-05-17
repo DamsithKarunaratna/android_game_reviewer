@@ -101,6 +101,7 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
 
                 if (null != user) {
                     Intent intent = new Intent(ViewGameDetailsActivity.this, AddReviewActivity.class);
+                    intent.putExtra(MainActivity.REVIEW_REQUEST_CODE, ADD_REVIEW_REQUEST);
                     startActivityForResult(intent, ADD_REVIEW_REQUEST);
                 } else {
                     Toast.makeText(ViewGameDetailsActivity.this, "You need to be logged in to add review", Toast.LENGTH_SHORT).show();

@@ -21,6 +21,9 @@ public class ReviewViewAdapter extends RecyclerView.Adapter<ReviewViewAdapter.Re
     private Context mContext;
 
     public static final String EXTRA_REVIEW_ID = "com.ctse.androidgamereviewer.REVIEW_ID";
+    public static final String EXTRA_REVIEW_LOCAL_ID = "com.ctse.androidgamereviewer.REVIEW_LOCAL_ID";
+    public static final String EXTRA_REVIEW_USER_EMAIL = "com.ctse.androidgamereviewer.REVIEW_USER_EMAIL";
+    public static final String EXTRA_REVIEW_GAME_ID = "com.ctse.androidgamereviewer.REVIEW_GAME_ID";
 
     public ReviewViewAdapter(Context mContext) {
         this.mContext = mContext;
@@ -46,6 +49,9 @@ public class ReviewViewAdapter extends RecyclerView.Adapter<ReviewViewAdapter.Re
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ViewReviewActivity.class);
                 intent.putExtra(EXTRA_REVIEW_ID, currentReview.get_id());
+                intent.putExtra(EXTRA_REVIEW_LOCAL_ID, currentReview.getId());
+                intent.putExtra(EXTRA_REVIEW_USER_EMAIL, currentReview.getUserEmail());
+                intent.putExtra(EXTRA_REVIEW_GAME_ID, currentReview.getGameId());
                 mContext.startActivity(intent);
             }
         });

@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int ADD_GAME_REQUEST = 2;
     public static final int LOGIN_REQUEST = 1995;
 
+    public static final String REVIEW_REQUEST_CODE = "com.ctse.androidgamereviewer.REVIEW_REQUEST";
+
     private GameViewModel gameViewModel;
     private ReviewViewModel reviewViewModel;
     SwipeRefreshLayout swipeRefreshLayout;

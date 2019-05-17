@@ -1,12 +1,16 @@
 package com.ctse.androidgamereviewer;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -54,6 +58,10 @@ public class ViewReviewActivity extends AppCompatActivity {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         tvReviewTitle = findViewById(R.id.text_view_review_title_view);
         tvReviewBody = findViewById(R.id.text_view_review_body_view);
         ratingBar = findViewById(R.id.ratingBarReview);
@@ -100,6 +108,15 @@ public class ViewReviewActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            default:
+                finish();
+                return true;
+        }
     }
 
     @Override

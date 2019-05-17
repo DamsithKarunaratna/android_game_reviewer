@@ -20,15 +20,46 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * The Repository class is the highest level of abstraction for persistent data operations.
+ * It acts as a mediator between the local Room-SQLite-database and the remote MongoDB database.
+ * It provides a clean API so that the rest of the app can create update delete and retrieve data
+ * easily without worrying about handling multiple databases.
+ * <p>
+ * See <a href="https://developer.android.com/jetpack/docs/guide">
+ * Official android architecture guide</a> for more information.
+ */
 public class GameRepository {
 
-    private static int REFRESH_TIMEOUT_IN_MINUTES = 3;
-
+    /**
+     * GameDAO is Room Data access object for handling local DB operations
+     *
+     * @see androidx.room.Dao
+     */
     private GameDAO gameDAO;
+    /**
+     * GameWebservice Retrofit webservice for handling remote DB  operations
+     */
     private GameWebService webService;
+    /**
+     * Executor For handling concurrent tasks
+     */
     private Executor executor;
+    /**
+     * GameDatabase is a Room Database class which creates instances of Data Access Objects
+     */
     private GameDatabase database;
 
+    /**
+     * List of games is stored with the LiveData wrapper. LiveData follows the Observer pattern
+     * and notifies the View whenever the data changes. LiveData is lifecycle aware and hence will
+     * not update Observers which are in an inactive state.
+     * <p>
+     * See <a href="https://developer.android.com/topic/libraries/architecture/livedata">
+     * LiveData Documentation</a> for more information.
+     *
+     * @see LiveData
+     */
     private LiveData<List<Game>> allGames;
 
     public GameRepository(Application application) {
@@ -40,16 +71,26 @@ public class GameRepository {
                 .build();
         webService = retrofit.create(GameWebService.class);
         executor = Executors.newSingleThreadExecutor();
+        /*
+          getAllGames() returns data wrapped in a LiveData object which can directly be assigned to
+          the allGames List.
+         */
         allGames = gameDAO.getAllGames();
 
-//        refreshData();
     }
 
+    /**
+     * inserts a new game object into the database. Game is inserted into the local database as
+     * well as the remote database. To avoid blocking the main thread, database operations are
+     * carried out on separate threads. This enables a smooth user experience.
+     *
+     * @param game entity object to be persisited
+     */
     public void insert(final Game game) {
-        // Insert game into local SQLite Database
+        // Insert game into local SQLite Database asynchronously
         new InsertGameAsyncTask(gameDAO).execute(game);
 
-        // Thread to insert game into remote MongoDB database
+        // Thread to insert game into remote MongoDB database asynchronously
         executor.execute(new Runnable() {
             @Override
             public void run() {
@@ -78,6 +119,9 @@ public class GameRepository {
         new DeleteGameAsyncTask(gameDAO).execute(game);
     }
 
+    /**
+     * @return allGames : Observable list of games.
+     */
     public LiveData<List<Game>> getAllGames() {
         return allGames;
     }
@@ -142,27 +186,24 @@ public class GameRepository {
         }
     }
 
+    /**
+     * Refresh the games list from the remote database and update the state of the SwipeRefreshLayout
+     *
+     * @param swipeRefreshLayout : is passed to the method so that the refreshing animation can be
+     *                           canceled once the data is retrieved.
+     */
     public void refreshData(final SwipeRefreshLayout swipeRefreshLayout) {
 
-        System.out.println("refreshData() called");
+        Log.d("gameApp", "game reviewer : refreshData() called");
         executor.execute(new Runnable() {
             @Override
             public void run() {
                 webService.getGames().enqueue(new Callback<List<Game>>() {
                     @Override
                     public void onResponse(Call<List<Game>> call, Response<List<Game>> response) {
-                        System.out.println("------ GOT CALL FROM REMOTE DB -------");
                         Log.d("GameRepository", "onResponse: GOT CALL FROM REMOTE DB");
                         List<Game> games = response.body();
                         assert games != null;
-                        for (Game g : games) {
-                            System.out.println(g.getId());
-                            System.out.println(g.getGenre());
-                            System.out.println(g.getTitle());
-                            System.out.println(g.getRelease_date());
-                            System.out.println(g.getImage());
-                            System.out.println(g.get_id());
-                        }
                         swipeRefreshLayout.setRefreshing(false);
                         new InsertAllGameAsyncTask(gameDAO).execute(games);
                     }

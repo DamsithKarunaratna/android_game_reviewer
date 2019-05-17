@@ -73,7 +73,6 @@ public class LoginActivity extends AppCompatActivity {
             } else {
 
                 // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
                 if(null!=response) {
                     Toast.makeText(this, "Error in log in", Toast.LENGTH_SHORT).show();
                     response.getError().printStackTrace();

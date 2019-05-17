@@ -15,6 +15,15 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * To feed all game data to the list in the MainActivity. This object creates views for items,
+ * and replaces the content of some of the views with new items when the original item is no longer
+ * visible. It is a controller for the RecyclerView.
+ *
+ * <a href="https://developer.android.com/guide/topics/ui/layout/recyclerview"> Documentation</a>
+ *
+ * @see androidx.recyclerview.widget.RecyclerView.Adapter
+ */
 public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHolder> {
 
     private List<Game> games = new ArrayList<>();
@@ -62,6 +71,9 @@ public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHo
         notifyDataSetChanged();
     }
 
+    /**
+     *  Provides a reference class for each individual item in the list.
+     */
     class GameHolder extends RecyclerView.ViewHolder {
         private TextView tvTitle;
         private TextView tvDescription;

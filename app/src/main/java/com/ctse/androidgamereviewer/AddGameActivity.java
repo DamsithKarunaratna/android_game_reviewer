@@ -133,12 +133,16 @@ public class AddGameActivity extends AppCompatActivity implements
             }
     }
 
+    /**
+     * Helper method to encode Bitmap image as a Base64 String.
+     * @param drawable Image to be encoded.
+     * @return Base64 encoded image.
+     */
     private String getBase64Image(BitmapDrawable drawable) {
         Bitmap bitmap = drawable.getBitmap();
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, bos);
         byte[] bb = bos.toByteArray();
-//        return Base64.encodeToString(bb, 0);
         return Base64.encodeToString(bb, Base64.NO_WRAP);
     }
 

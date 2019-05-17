@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/loginGrey"
+    android:orientation="vertical"
+    tools:context=".SplashActivity">
+
+    <ImageView
+        android:layout_marginTop="100dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/gameReviewLogo" />
+
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/blue_gradient"
+        android:fontFamily="sans-serif-light"
+        android:paddingLeft="50sp"
+        android:paddingRight="50sp"
+        android:text="Log in"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+</LinearLayout>

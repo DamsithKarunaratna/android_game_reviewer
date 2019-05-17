@@ -28,6 +28,32 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.bson.types.ObjectId;
 
+/**
+ * This is the main activity of the app and will be the activity which is shown on launch.
+ * It consists of a RecyclerView which contains a list of games and their respective reviews
+ * The games are stored on a local 'Room' database as well as a remote mongoDB database.
+ * The game list can be updated by swiping down on the SwipeRefreshLayout
+ *
+ * @see androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+ * basic CRUD operations can be carried out on games.
+ * <p>
+ * This app follows the application architecture guidelines found in the official android
+ * documentation to create a robust, production quality application
+ * <p>
+ * See <a href="https://developer.android.com/jetpack/docs/guide">
+ * android official guide to app architecture
+ * </a> for more information.
+ * <p>
+ * This application uses the following components from the android architecture components
+ * @see androidx.lifecycle.LiveData
+ * @see androidx.room.Room
+ * @see androidx.lifecycle.ViewModel
+ * <p>
+ * Authentication is handled using the firebaseUI library.
+ * See the <a href="https://firebase.google.com/docs/auth">
+ * official Firebase documentation
+ * </a> for more information.
+ */
 public class MainActivity extends AppCompatActivity {
 
     public static final int ADD_GAME_REQUEST = 2;
@@ -65,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPrepareOptionsMenu(menu);
         System.out.println("On prepare called");
         user = FirebaseAuth.getInstance().getCurrentUser();
-        if(null==user) {
+        if (null == user) {
             menu.findItem(R.id.logout_menu_item).setVisible(false);
             menu.findItem(R.id.login_menu_item).setVisible(true);
         } else {
@@ -112,11 +138,9 @@ public class MainActivity extends AppCompatActivity {
         addGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                // check if logged in
                 user = FirebaseAuth.getInstance().getCurrentUser();
 
-                if (null!=user) {
+                if (null != user) {
                     // Name, email address
                     System.out.println(user.getDisplayName());
                     System.out.println(user.getEmail());
@@ -137,46 +161,67 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == ADD_GAME_REQUEST && resultCode == RESULT_OK) {
-            String title = data.getStringExtra(AddGameActivity.EXTRA_TITLE);
-            String description = data.getStringExtra(AddGameActivity.EXTRA_DESCRIPTION);
-            String releaseDate = data.getStringExtra(AddGameActivity.EXTRA_RELEASE_DATE);
-            String image = data.getStringExtra(AddGameActivity.EXTRA_IMAGE);
-
-            System.out.println("image " + image);
-
-            Game game = new Game();
-            ObjectId objectId = new ObjectId();
-
-            game.setTitle(title);
-            game.setGenre(description);
-            game.setRelease_date(releaseDate);
-            game.setImage(image);
-            game.set_id(objectId.toString());
-
-            gameViewModel.insert(game);
-
-            Toast.makeText(this, "Game Saved", Toast.LENGTH_SHORT).show();
-
+            addGame(data);
         } else if (requestCode == LOGIN_REQUEST && resultCode == RESULT_OK) {
             this.invalidateOptionsMenu();
             this.supportInvalidateOptionsMenu();
         } else {
-
             Toast.makeText(this, "Game not saved", Toast.LENGTH_SHORT).show();
-
         }
     }
 
+    /**
+     * This method adds a game to the database using the insert() method in the GameViewModel
+     *
+     * @param data is an Intent containing information to be added to the game
+     * @see GameViewModel
+     */
+    private void addGame(@Nullable Intent data) {
+
+        String title = data.getStringExtra(AddGameActivity.EXTRA_TITLE);
+        String description = data.getStringExtra(AddGameActivity.EXTRA_DESCRIPTION);
+        String releaseDate = data.getStringExtra(AddGameActivity.EXTRA_RELEASE_DATE);
+        String image = data.getStringExtra(AddGameActivity.EXTRA_IMAGE);
+
+        System.out.println("image " + image);
+
+        Game game = new Game();
+        ObjectId objectId = new ObjectId();
+
+        game.setTitle(title);
+        game.setGenre(description);
+        game.setRelease_date(releaseDate);
+        game.setImage(image);
+        game.set_id(objectId.toString());
+
+        gameViewModel.insert(game);
+
+        Toast.makeText(this, "Game Saved", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * method to open the login activity which starts the Fire base login flow
+     * the login activity is started using startActivityForResult() because the result is required
+     * to invalidate the option menu using InvalidateOptionsMenu() so that onPrepareOptionsMenu()
+     * is called and the login menu item is replaced by the logout menu item.
+     */
     private void openLoginActivity() {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivityForResult(intent, LOGIN_REQUEST);
     }
+
+    /**
+     * This method is used to logout the fire base user. If the logout is successful, the logout
+     * options menu item will be replaced with the login options menu item.
+     *
+     * @see AuthUI
+     */
     private void logout() {
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()) {
+                        if (task.isSuccessful()) {
                             Toast.makeText(MainActivity.this, "sign out successful",
                                     Toast.LENGTH_SHORT).show();
                             MainActivity.this.invalidateOptionsMenu();

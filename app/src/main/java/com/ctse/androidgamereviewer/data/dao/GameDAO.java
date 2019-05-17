@@ -18,6 +18,8 @@ import static androidx.room.OnConflictStrategy.REPLACE;
  * The room framework creates an implementation of the GameDAO at runtime.
  *
  * @see Dao
+ * <a href="https://developer.android.com/topic/libraries/architecture/room">
+ * Official Room Documentation</a>
  */
 @Dao
 public abstract class GameDAO {

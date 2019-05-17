@@ -19,7 +19,7 @@ import java.util.List;
 
 
 /*https://firebase.google.com/docs/auth/android/firebaseui */
-public class SplashActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     public static final int RC_SIGN_IN = 1994;
 

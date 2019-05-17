@@ -2,9 +2,7 @@ package com.ctse.androidgamereviewer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -170,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openLoginActivity() {
-        Intent intent = new Intent(MainActivity.this, SplashActivity.class);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivityForResult(intent, LOGIN_REQUEST);
     }
     private void logout() {

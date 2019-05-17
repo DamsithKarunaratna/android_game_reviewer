@@ -26,6 +26,15 @@ import java.io.ByteArrayOutputStream;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * AddGameActivity is launched from the MainActivity when the floating action button is clicked.
+ * It consists of a form to enter information about the game and pass it back as a result to the
+ * Main activity where it can be persisted.
+ * <p>
+ * A custom DatePicker library was used since the DatePicker in newer versions of android
+ * cannot use a Spinner style. See the <a href="https://github.com/drawers/SpinnerDatePicker">
+ * Spinner date picker github page</a>
+ */
 public class AddGameActivity extends AppCompatActivity implements
         com.tsongkha.spinnerdatepicker.DatePickerDialog.OnDateSetListener {
 
@@ -113,7 +122,7 @@ public class AddGameActivity extends AppCompatActivity implements
         super.onActivityResult(requestCode, resultCode, data);
         // Result code is RESULT_OK only if the user selects an Image
         if (resultCode == Activity.RESULT_OK)
-            switch (requestCode){
+            switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
                     //data.getData returns the content URI for the selected Image
                     Uri selectedImage = data.getData();
@@ -128,7 +137,7 @@ public class AddGameActivity extends AppCompatActivity implements
     private String getBase64Image(BitmapDrawable drawable) {
         Bitmap bitmap = drawable.getBitmap();
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,90,bos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 90, bos);
         byte[] bb = bos.toByteArray();
 //        return Base64.encodeToString(bb, 0);
         return Base64.encodeToString(bb, Base64.NO_WRAP);
@@ -136,23 +145,29 @@ public class AddGameActivity extends AppCompatActivity implements
 
 
     /**
+     * Method to pick an image from the gallery.
+     * First Creates an implicit Intent with action as ACTION_PICK
+     * Then sets the type as image/*. This ensures only components of type image are selected
+     * Passes an extra array with the accepted mime types. This will ensure only components
+     * with these MIME types as targeted.
+     * <p>
      * See <a href="https://androidclarified.com/pick-image-gallery-camera-android/">
-     *          this article
-     *     </a>
+     * article
+     * </a> for more information.
      */
-    private void pickImageFromGallery(){
-        //Create an implicit Intent with action as ACTION_PICK
-        Intent intent=new Intent(Intent.ACTION_PICK);
-        // Sets the type as image/*. This ensures only components of type image are selected
+    private void pickImageFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        /* We pass an extra array with the accepted mime types. This will ensure only components
-        with these MIME types as targeted. */
         String[] mimeTypes = {"image/jpeg", "image/png"};
-        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
-        // Launching the Intent
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         startActivityForResult(intent, GALLERY_REQUEST_CODE);
     }
 
+    /**
+     * Creates an intent with data extracted from the form and passes it as a result back to
+     * MainActivity. Simple form validation is carried out to ensure that missing values are not
+     * persisted.
+     */
     private void saveGame() {
         String title = etTitle.getText().toString().trim();
         String description = etGenre.getText().toString().trim();
@@ -180,11 +195,14 @@ public class AddGameActivity extends AppCompatActivity implements
 
     }
 
+    /**
+     * Helper method to create a Date in String format from integer values.
+     */
     private String getFormattedDate(int selectedYear, int selectedMonth, int selectedDay) {
 
         String date = "";
 
-        switch(selectedMonth) {
+        switch (selectedMonth) {
             case 0:
                 date += "January";
                 break;

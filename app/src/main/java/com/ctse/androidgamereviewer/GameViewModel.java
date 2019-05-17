@@ -11,6 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+/**
+ * Abstracts Data handling logic out of the MainActivity UI controller.
+ * Consists of a gameRepository which handles CRUD operations at a high level.
+ * <p>
+ * See <a href="https://developer.android.com/topic/libraries/architecture/viewmodel">
+ * Documentation </a> for more details.
+ */
 public class GameViewModel extends AndroidViewModel {
 
     private GameRepository gameRepository;

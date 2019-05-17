@@ -1,3 +1,10 @@
+/**
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: GameViewAdapter.java
+ */
 package com.ctse.androidgamereviewer;
 
 import android.content.Context;
@@ -50,6 +57,7 @@ public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHo
         holder.tvTitle.setText(currentGame.getTitle());
         holder.tvDescription.setText(currentGame.getGenre());
 
+        // Start ViewGameDetailsActivity
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

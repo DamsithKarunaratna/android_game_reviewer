@@ -1,3 +1,10 @@
+/**
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: AddReviewActivity.java
+ */
 package com.ctse.androidgamereviewer;
 
 import androidx.annotation.Nullable;
@@ -18,9 +25,14 @@ import android.widget.Toast;
 import com.ctse.androidgamereviewer.data.entities.Review;
 import com.google.android.material.textfield.TextInputEditText;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
+/**
+ * AddReviewActivity is launched from the ViewGameDetailsActivity when Add Review button is clicked
+ * or from ViewReviewActivity when Edit button is clicked
+ * It consists of a form to enter review details such as review title, review body and a star rating
+ * and passed back to View game activity to add a new review or to the view review activity to
+ * update the review.
+ *
+ */
 public class AddReviewActivity extends AppCompatActivity {
 
     public static final String EXTRA_REVIEW_TITLE = "com.ctse.androidgamereviewer.EXTRA_REVIEW_TITLE";
@@ -46,10 +58,12 @@ public class AddReviewActivity extends AppCompatActivity {
 
         reviewId = getIntent().getStringExtra(ReviewViewAdapter.EXTRA_REVIEW_ID);
 
+        // Set action bar close icon
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_close);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        // Set title
         if (requestCode == ViewReviewActivity.EDIT_REVIEW_REQUEST) {
             setTitle("Edit Review");
         } else {
@@ -60,6 +74,11 @@ public class AddReviewActivity extends AppCompatActivity {
         etReviewTitle = findViewById(R.id.edit_text_review_title);
         etReviewBody = findViewById(R.id.input_edit_text_review);
 
+
+        /**
+         * If request code is update review, form fields will be filled from current review values
+         * Observe current review data as a live data
+         * */
         if (requestCode == ViewReviewActivity.EDIT_REVIEW_REQUEST) {
             reviewViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
             reviewViewModel.getReviewById(reviewId).observe(this, new Observer<Review>() {
@@ -74,6 +93,7 @@ public class AddReviewActivity extends AppCompatActivity {
 
     }
 
+    // Set menu options
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -93,6 +113,11 @@ public class AddReviewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Create an intent with data entered or modified by user and post it back as a result to
+     * the activity where the intent was started (View game details activity or View review activity)
+     * Rating, title and body of review will be validated before posting results.
+     * */
     private void saveReview() {
         int rating = (int) ratingBar.getRating();
         String reviewTitle = etReviewTitle.getText().toString().trim();

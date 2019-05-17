@@ -1,3 +1,10 @@
+/**
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: ViewGameDetailsActivity.java
+ */
 package com.ctse.androidgamereviewer;
 
 import android.content.Intent;
@@ -34,6 +41,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * ViewGameDetailsActivity is launched from GameViewAdapter through MainActivity when user click on
+ * a game in the current game list. It contains information about the selected game including a
+ * picture if available. All the reviews added to the game also shown in a list with ratings.
+ *
+ * */
+
 public class ViewGameDetailsActivity extends AppCompatActivity {
 
     public static final int ADD_REVIEW_REQUEST = 3;
@@ -69,6 +83,10 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
         final ReviewViewAdapter adapter = new ReviewViewAdapter(this);
         recyclerView.setAdapter(adapter);
 
+        /**
+         * Get the current game and set information to the UI
+         * @see GameViewModel
+         * */
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         gameViewModel.getAllGames().observe(this, new Observer<List<Game>>() {
             @Override
@@ -86,6 +104,11 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Get all the reviews for current game and display in Review adapter
+         * @see ReviewViewAdapter
+         * @see ReviewViewModel
+         * */
         reviewViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
         reviewViewModel.getReviewForGame(gameId).observe(this, new Observer<List<Review>>() {
             @Override
@@ -95,6 +118,10 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Start AddReviewActivity for result
+         * Review request code is passed as extras
+         * */
         Button addReviewButton = findViewById(R.id.button_add_review);
         addReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,12 +129,13 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
                 user = FirebaseAuth.getInstance().getCurrentUser();
 
                 if (null != user) {
-                    Intent intent = new Intent(ViewGameDetailsActivity.this, AddReviewActivity.class);
+                    Intent intent = new Intent(ViewGameDetailsActivity.this,
+                            AddReviewActivity.class);
                     intent.putExtra(MainActivity.REVIEW_REQUEST_CODE, ADD_REVIEW_REQUEST);
                     startActivityForResult(intent, ADD_REVIEW_REQUEST);
                 } else {
-                    Toast.makeText(ViewGameDetailsActivity.this, "You need to be logged in to add review", Toast.LENGTH_SHORT).show();
-                    // start login activity?
+                    Toast.makeText(ViewGameDetailsActivity.this,
+                            "You need to be logged in to add review", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -116,7 +144,13 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
 
     }
 
-    // ImageView decode
+    /**
+     * Method to create image from base64.
+     * @param base64 base64 string to be converted
+     * <p>
+     * See <a href="https://stackoverflow.com/questions/15683032/android-convert-base64-encoded-string-into-image-view">
+     *     Stackoverflow question</a>
+     * */
     public Bitmap decodeBase64(String base64) {
 
         if(base64 != null) {
@@ -128,7 +162,7 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
 
     }
 
-    // Action bar back button
+    // Action bar options
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -142,10 +176,21 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
         return true;
     }
 
+
+    /**
+     * Add a new review to database from the intent extras passed from AddReviewActivity
+     * @see ReviewViewModel
+     *
+     * <p>MongoDB Driver is used to generate a object id for the review
+     * See
+     * <a href="https://docs.mongodb.com/manual/reference/method/ObjectId/">MongoDB Documentation</a>
+     * for more information
+     * */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // check the request code and result code
         if (requestCode == ADD_REVIEW_REQUEST && resultCode == RESULT_OK) {
             int rating = data.getIntExtra(AddReviewActivity.EXTRA_REVIEW_RATING, 0);
             String reviewTitle = data.getStringExtra(AddReviewActivity.EXTRA_REVIEW_TITLE);

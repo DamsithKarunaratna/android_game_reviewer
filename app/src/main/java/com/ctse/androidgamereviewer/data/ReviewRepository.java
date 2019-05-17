@@ -1,3 +1,10 @@
+/**
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: ReviewRepository.java
+ */
 package com.ctse.androidgamereviewer.data;
 
 import android.app.Application;
@@ -76,7 +83,7 @@ public class ReviewRepository {
     }
 
     /**
-     * inserts a new review object into the database. Game is inserted into the local database as
+     * inserts a new review object into the database. Review is inserted into the local database as
      * well as the remote database. To avoid blocking the main thread, database operations are
      * carried out on separate threads. This enables a smooth user experience.
      *
@@ -104,6 +111,13 @@ public class ReviewRepository {
         });
     }
 
+    /**
+     * Update a review object in the database. Review is updated in the local database as
+     * well as the remote database. To avoid blocking the main thread, database operations are
+     * carried out on separate threads. This enables a smooth user experience.
+     *
+     * @param review review object to be updated.
+     */
     public void update(final Review review) {
         new UpdateReviewAsyncTask(reviewDAO).execute(review);
 
@@ -129,6 +143,13 @@ public class ReviewRepository {
         });
     }
 
+    /**
+     * Deletes review object from the database. Review is delete from the local database as
+     * well as the remote database. To avoid blocking the main thread, database operations are
+     * carried out on separate threads. This enables a smooth user experience.
+     *
+     * @param review review object to be deleted.
+     */
     public void delete(final Review review) {
         new DeleteReviewAsyncTask(reviewDAO).execute(review);
 

@@ -1,3 +1,10 @@
+/**
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: ViewReviewActivity.java
+ */
 package com.ctse.androidgamereviewer;
 
 import androidx.annotation.Nullable;
@@ -8,8 +15,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +31,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * ViewReviewActivity is launched from ReviewViewAdapter through ViewGameDetailsActivity when user
+ * click on a review shown in the list of reviews for specific game. It contains review details and
+ * options to edit or delete review if the user is logged in and has entered the review.
+ * */
 public class ViewReviewActivity extends AppCompatActivity {
 
     public static final int EDIT_REVIEW_REQUEST = 11;
@@ -120,10 +130,16 @@ public class ViewReviewActivity extends AppCompatActivity {
         }
     }
 
+
+    /**
+     * Update review from the intent extras passed from AddReviewActivity
+     * @see ReviewViewModel
+     * */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // check for request code
         if (requestCode == EDIT_REVIEW_REQUEST && resultCode == RESULT_OK) {
             int rating = data.getIntExtra(AddReviewActivity.EXTRA_REVIEW_RATING, 0);
             String reviewTitle = data.getStringExtra(AddReviewActivity.EXTRA_REVIEW_TITLE);

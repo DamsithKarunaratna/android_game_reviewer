@@ -1,3 +1,10 @@
+/**
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: GameWebService.java
+ */
 package com.ctse.androidgamereviewer.data.retrofit;
 
 import com.ctse.androidgamereviewer.data.entities.Game;
@@ -12,6 +19,12 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+
+/**
+ * Retrofit is a type-safe HTTP client for Android and Java
+ * <p>
+ * See <a href="https://square.github.io/retrofit/">Retrofit documentation</a> for more information
+ * */
 
 public interface GameWebService {
 

@@ -1,3 +1,10 @@
+/**
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: ReviewViewAdapter.java
+ */
 package com.ctse.androidgamereviewer;
 
 import android.content.Context;
@@ -14,6 +21,16 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+/**
+ * To feed all reviews of a game to a list in the ViewGameDetailsActivity. This object creates views
+ * for items, and replaces the content of some of the views with new items when the original item is
+ * no longer visible. It is a controller for the RecyclerView.
+ *
+ * <a href="https://developer.android.com/guide/topics/ui/layout/recyclerview"> Documentation</a>
+ *
+ * @see androidx.recyclerview.widget.RecyclerView.Adapter
+ * */
 
 public class ReviewViewAdapter extends RecyclerView.Adapter<ReviewViewAdapter.ReviewHolder> {
 
@@ -44,6 +61,7 @@ public class ReviewViewAdapter extends RecyclerView.Adapter<ReviewViewAdapter.Re
         holder.tvReviewBody.setText(currentReview.getBody());
         holder.tvRating.setText(currentReview.getRating() + "/5");
 
+        // Start ViewReviewActivity
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +85,9 @@ public class ReviewViewAdapter extends RecyclerView.Adapter<ReviewViewAdapter.Re
         notifyDataSetChanged();
     }
 
+    /**
+     *  Provides a reference class for each individual item in the list.
+     */
     class ReviewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvReviewTitle;

@@ -3,6 +3,8 @@ package com.ctse.androidgamereviewer;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.ctse.androidgamereviewer.data.entities.Review;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class AddReviewActivity extends AppCompatActivity {
@@ -25,10 +28,20 @@ public class AddReviewActivity extends AppCompatActivity {
     private EditText etReviewTitle;
     private TextInputEditText etReviewBody;
 
+    private ReviewViewModel reviewViewModel;
+
+    private String reviewId;
+
+    private int requestCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_review);
+
+        requestCode = getIntent().getIntExtra(MainActivity.REVIEW_REQUEST_CODE, -999);
+
+        reviewId = getIntent().getStringExtra(ReviewViewAdapter.EXTRA_REVIEW_ID);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_close);
@@ -37,6 +50,18 @@ public class AddReviewActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.ratingBar);
         etReviewTitle = findViewById(R.id.edit_text_review_title);
         etReviewBody = findViewById(R.id.input_edit_text_review);
+
+        if (requestCode == ViewReviewActivity.EDIT_REVIEW_REQUEST) {
+            reviewViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
+            reviewViewModel.getReviewById(reviewId).observe(this, new Observer<Review>() {
+                @Override
+                public void onChanged(Review review) {
+                    ratingBar.setRating(review.getRating());
+                    etReviewBody.setText(review.getBody());
+                    etReviewTitle.setText(review.getTitle());
+                }
+            });
+        }
 
     }
 

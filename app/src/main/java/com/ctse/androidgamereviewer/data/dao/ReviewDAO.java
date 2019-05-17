@@ -34,4 +34,7 @@ public abstract class ReviewDAO {
     @Query("SELECT * FROM Review")
     public abstract LiveData<List<Review>> getAllReviews();
 
+    @Query("SELECT * FROM Review WHERE remote_id =:reviewId")
+    public abstract LiveData<Review> getReviewById(String reviewId);
+
 }

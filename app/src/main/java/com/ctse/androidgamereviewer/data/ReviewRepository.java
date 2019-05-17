@@ -84,6 +84,10 @@ public class ReviewRepository {
         return database.reviewDAO().getReviewsByGameId(game_id);
     }
 
+    public LiveData<Review> getReviewById(String review_id) {
+        return database.reviewDAO().getReviewById(review_id);
+    }
+
     private static class InsertReviewAsyncTask extends AsyncTask<Review, Void, Void> {
 
         private ReviewDAO reviewDAO;

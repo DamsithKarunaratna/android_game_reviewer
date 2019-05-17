@@ -14,8 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LoginActivity" android:theme="@style/SplashScreenTheme">
-        </activity>
+        <activity android:name=".ViewReviewActivity"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/SplashScreenTheme" />
         <activity android:name=".AddReviewActivity" />
         <activity android:name=".ViewGameDetailsActivity" />
         <activity

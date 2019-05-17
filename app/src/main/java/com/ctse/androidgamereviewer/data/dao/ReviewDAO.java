@@ -13,6 +13,14 @@ import androidx.room.Update;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
+/**
+ * GameDAO includes methods that offer abstract access to the game database.
+ * The room framework creates an implementation of the GameDAO at runtime.
+ *
+ * @see Dao
+ * <a href="https://developer.android.com/topic/libraries/architecture/room">
+ * Official Room Documentation</a>
+ */
 @Dao
 public abstract class ReviewDAO {
 

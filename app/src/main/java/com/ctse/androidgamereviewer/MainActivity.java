@@ -2,6 +2,7 @@ package com.ctse.androidgamereviewer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        System.out.println("On prepare called");
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (null == user) {
             menu.findItem(R.id.logout_menu_item).setVisible(false);
@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                System.out.println("SWIPED");
                 gameViewModel.getGameRepository().refreshData(swipeRefreshLayout);
             }
         });
@@ -142,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (null != user) {
                     // Name, email address
-                    System.out.println(user.getDisplayName());
-                    System.out.println(user.getEmail());
+                    Log.d("gameApp", user.getDisplayName());
+                    Log.d("gameApp", user.getEmail());
                     Intent intent = new Intent(MainActivity.this, AddGameActivity.class);
                     startActivityForResult(intent, ADD_GAME_REQUEST);
                 } else {
@@ -182,8 +181,6 @@ public class MainActivity extends AppCompatActivity {
         String description = data.getStringExtra(AddGameActivity.EXTRA_DESCRIPTION);
         String releaseDate = data.getStringExtra(AddGameActivity.EXTRA_RELEASE_DATE);
         String image = data.getStringExtra(AddGameActivity.EXTRA_IMAGE);
-
-        System.out.println("image " + image);
 
         Game game = new Game();
         ObjectId objectId = new ObjectId();

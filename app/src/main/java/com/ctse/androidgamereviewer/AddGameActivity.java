@@ -126,9 +126,6 @@ public class AddGameActivity extends AppCompatActivity implements
                     //data.getData returns the content URI for the selected Image
                     Uri selectedImage = data.getData();
                     imageView.setImageURI(selectedImage);
-
-//                    System.out.println("Base 64 image : " +
-//                            getBase64Image((BitmapDrawable) imageView.getDrawable()));
                     break;
             }
     }

@@ -12,7 +12,12 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 /**
- * Singleton class to return a GameDatabase
+ * Singleton class which return an instance of GameDatabase using the Room databaseBuilder class.
+ * GameDatabase adds another layer of abstraction to persistence and holds the Data Access Objects.
+ *
+ * @see Database
+ * <a href="https://developer.android.com/topic/libraries/architecture/room">
+ * Official Room Documentation</a>
  */
 @Database(entities = {Game.class, Review.class}, version = 5, exportSchema = false)
 public abstract class GameDatabase extends RoomDatabase {

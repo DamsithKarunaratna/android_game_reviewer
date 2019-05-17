@@ -16,7 +16,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-/*https://firebase.google.com/docs/auth/android/firebaseui */
+/**
+ * A login screen which acts as the starting point in the authentication flow.
+ * Authentication is handled by Firebase authentication.
+ *
+ * See <a href="https://firebase.google.com/docs/auth/android/firebaseui">
+ * FirebaseUI documentation
+ * </a> for more information.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     public static final int RC_SIGN_IN = 1994;
@@ -62,18 +69,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 setResult(RESULT_OK);
                 finish();
-//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//
-//                if (null!=user) {
-//                    // Name, email address, and profile photo Url
-//                    System.out.println(user.getDisplayName());
-//                    System.out.println(user.getEmail());
-//                }
 
             } else {
 
                 // Sign in failed. If response is null the user canceled the
-                if(null!=response) {
+                if (null != response) {
                     Toast.makeText(this, "Error in log in", Toast.LENGTH_SHORT).show();
                     response.getError().printStackTrace();
                 } else {

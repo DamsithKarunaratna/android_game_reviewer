@@ -50,4 +50,8 @@ dependencies {
     implementation 'org.mongodb:mongodb-driver-sync:3.10.1'
     // DatePickerSpinner
     implementation 'com.github.drawers:SpinnerDatePicker:2.0.1'
+    // firebase
+    implementation 'com.google.firebase:firebase-core:16.0.9'
 }
+
+apply plugin: 'com.google.gms.google-services'

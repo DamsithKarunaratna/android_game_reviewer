@@ -46,4 +46,28 @@
         android:text="@string/review_dummy"
         android:layout_below="@id/ratingBarReview"/>
 
+    <LinearLayout
+        android:id="@+id/layout_options"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="4dp"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/button_edit_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="EDIT" />
+
+        <Button
+            android:id="@+id/button_delete_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="DELETE" />
+    </LinearLayout>
+
 </RelativeLayout>

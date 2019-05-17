@@ -163,6 +163,7 @@ public class ReviewRepository {
                             System.out.println(r.getId());
                             System.out.println(r.getRating());
                             System.out.println(r.getTitle());
+                            System.out.println(r.getUserEmail());
                         }
 
                         new InsertAllReviewsAsyncTask(reviewDAO).execute(reviews);

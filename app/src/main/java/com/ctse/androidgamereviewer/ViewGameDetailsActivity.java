@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 import com.ctse.androidgamereviewer.data.entities.Game;
 import com.ctse.androidgamereviewer.data.entities.Review;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.bson.types.ObjectId;
 
@@ -42,10 +44,14 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
     private ReviewViewModel reviewViewModel;
     private Game game;
 
+    FirebaseUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_game_details);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         // Get reference for action bar
         ActionBar actionBar = getSupportActionBar();
@@ -93,8 +99,17 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
         addReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewGameDetailsActivity.this, AddReviewActivity.class);
-                startActivityForResult(intent, ADD_REVIEW_REQUEST);
+                user = FirebaseAuth.getInstance().getCurrentUser();
+
+                if (null != user) {
+                    Intent intent = new Intent(ViewGameDetailsActivity.this, AddReviewActivity.class);
+                    startActivityForResult(intent, ADD_REVIEW_REQUEST);
+                } else {
+                    Toast.makeText(ViewGameDetailsActivity.this, "You need to be logged in to add review", Toast.LENGTH_SHORT).show();
+                    // start login activity?
+                }
+
+
             }
         });
 
@@ -147,6 +162,7 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
             review.setDate(dateFormat.format(date.getTime()));
             review.setGameId(game.get_id());
             review.set_id(objectId.toString());
+            review.setUserEmail(user.getEmail());
 
             reviewViewModel.insert(review);
 

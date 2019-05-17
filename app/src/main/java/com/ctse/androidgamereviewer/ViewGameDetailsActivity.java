@@ -81,6 +81,8 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
                 if(bmp != null) {
                     ivGameImage.setImageBitmap(bmp);
                 }
+
+                setTitle(game.getTitle());
             }
         });
 

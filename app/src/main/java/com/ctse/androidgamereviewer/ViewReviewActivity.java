@@ -61,6 +61,7 @@ public class ViewReviewActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        setTitle("Review");
 
         tvReviewTitle = findViewById(R.id.text_view_review_title_view);
         tvReviewBody = findViewById(R.id.text_view_review_body_view);

@@ -50,6 +50,12 @@ public class AddReviewActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_close);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        if (requestCode == ViewReviewActivity.EDIT_REVIEW_REQUEST) {
+            setTitle("Edit Review");
+        } else {
+            setTitle("Add Review");
+        }
+
         ratingBar = findViewById(R.id.ratingBar);
         etReviewTitle = findViewById(R.id.edit_text_review_title);
         etReviewBody = findViewById(R.id.input_edit_text_review);

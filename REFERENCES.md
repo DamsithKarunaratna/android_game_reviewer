@@ -8,3 +8,11 @@
  - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
  - [ViewModel](https://developer.android.com/reference/android/arch/lifecycle/ViewModel)
  - [Using Room + LiveData + ViewModel with Retrofit for online sync](https://proandroiddev.com/the-missing-google-sample-of-android-architecture-components-guide-c7d6e7306b8f)
+ - [Image compression](https://github.com/zetbaitsu/Compressor)
+ - [Picking an image from the gallery](https://androidclarified.com/pick-image-gallery-camera-android/)
+ - [Spinner Date Picker](https://github.com/drawers/SpinnerDatePicker)
+ - [Firebase UI]( https://firebase.google.com/docs/auth/android/firebaseui)
+
+
+
+

@@ -10,12 +10,8 @@ package com.ctse.androidgamereviewer;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,36 +43,54 @@ import id.zelory.compressor.Compressor;
  * A custom DatePicker library was used since the DatePicker in newer versions of android
  * cannot use a Spinner style. See the <a href="https://github.com/drawers/SpinnerDatePicker">
  * Spinner date picker github page</a>
+ * <p>
+ * Image compression is handled by the <a href="https://github.com/zetbaitsu/Compressor">
+ * compressor </a> library
  */
 public class AddGameActivity extends AppCompatActivity implements
         com.tsongkha.spinnerdatepicker.DatePickerDialog.OnDateSetListener {
 
+    // String constants accessible statically from other classes used to tag Intent extras
     public static final String EXTRA_TITLE = "com.ctse.androidgamereviewer.EXTRA_TITLE";
     public static final String EXTRA_DESCRIPTION = "com.ctse.androidgamereviewer.EXTRA_DESCRIPTION";
     public static final String EXTRA_RELEASE_DATE = "com.ctse.androidgamereviewer.EXTRA_RELEASE_DATE";
     public static final String EXTRA_IMAGE = "com.ctse.androidgamereviewer.EXTRA_IMAGE";
+
+    // Arbitrary code for creating implicit intent
     public static final int GALLERY_REQUEST_CODE = 12;
 
     private EditText etTitle;
     private EditText etGenre;
     private EditText etDate;
     private ImageView imageView;
-    private ImageButton imageButton;
-    private File actualImage;
+    private ImageButton showDatePickerButton;
 
+    /**
+     * From the Android Open Source SpinnerDatePicker project
+     * See the <a href="https://github.com/drawers/SpinnerDatePicker">
+     * Spinner date picker github page</a>
+     */
     DatePickerDialog datePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_game);
 
+        // Initialize views
         etTitle = findViewById(R.id.edit_text_game_title);
         etGenre = findViewById(R.id.edit_text_game_genre);
         etDate = findViewById(R.id.edit_text_date);
-        imageButton = findViewById(R.id.btn_open_date_picker);
+        showDatePickerButton = findViewById(R.id.btn_open_date_picker);
         imageView = findViewById(R.id.image_view_game_image);
 
+        /*
+         * From the Android Open Source SpinnerDatePicker project
+         * at https://github.com/drawers/SpinnerDatePicker"
+         *
+         * Initialize a DatePickerDialog
+         */
         datePickerDialog = new SpinnerDatePickerDialogBuilder()
                 .context(AddGameActivity.this)
                 .callback(AddGameActivity.this)
@@ -88,12 +102,10 @@ public class AddGameActivity extends AppCompatActivity implements
                 .minDate(1990, 0, 1)
                 .build();
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        showDatePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 datePickerDialog.show();
-
             }
         });
 
@@ -134,13 +146,21 @@ public class AddGameActivity extends AppCompatActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         // Result code is RESULT_OK only if the user selects an Image
         if (resultCode == Activity.RESULT_OK)
             switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
                     try {
-                        actualImage = FileUtil.from(this, data.getData());
 
+                        /*
+                         * "id.zelory:compressor:2.1.0" library used for compressing bitmap images
+                         * This saves bandwidth when saving the image as well as allows safe
+                         * transfer of data through Intent
+                         *
+                         * See github project at https://github.com/zetbaitsu/Compressor
+                         */
+                        File actualImage = FileUtil.from(this, data.getData());
                         Bitmap bitmap = new Compressor(this)
                                 .setMaxWidth(400)
                                 .setMaxHeight(600)
@@ -149,8 +169,6 @@ public class AddGameActivity extends AppCompatActivity implements
                                 .compressToBitmap(actualImage);
 
                         imageView.setImageBitmap(bitmap);
-                        System.out.println("Byte count " + ((BitmapDrawable)imageView.getDrawable())
-                                .getBitmap().getByteCount());
 
                     } catch (IOException e) {
                         Toast.makeText(this, "Failed to read picture data!",
@@ -164,11 +182,11 @@ public class AddGameActivity extends AppCompatActivity implements
 
     /**
      * Helper method to encode Bitmap image as a Base64 String.
+     *
      * @param drawable Image to be encoded.
      * @return Base64 encoded image.
-     *
      * @see <a href="https://stackoverflow.com/questions/36492084/how-to-convert-an-image-to-base64-string-in-java">
-     *     This stackoverflow question</a>
+     * This stackoverflow question</a>
      */
     private String getBase64Image(BitmapDrawable drawable) {
         Bitmap bitmap = drawable.getBitmap();

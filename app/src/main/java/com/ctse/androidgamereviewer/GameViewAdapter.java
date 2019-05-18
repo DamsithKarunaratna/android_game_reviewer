@@ -17,10 +17,8 @@ import android.widget.TextView;
 import com.ctse.androidgamereviewer.data.entities.Game;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,8 +41,6 @@ public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHo
 
     private List<Game> games = new ArrayList<>();
     private Context mContext;
-    private DateFormat m_ISO8601Local = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-            Locale.ENGLISH);
 
 
     public GameViewAdapter(Context mContext) {

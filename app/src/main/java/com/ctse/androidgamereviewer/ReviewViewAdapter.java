@@ -34,13 +34,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ReviewViewAdapter extends RecyclerView.Adapter<ReviewViewAdapter.ReviewHolder> {
 
-    private List<Review> reviews = new ArrayList<>();
-    private Context mContext;
 
+    // String Tags for Intent extras
     public static final String EXTRA_REVIEW_ID = "com.ctse.androidgamereviewer.REVIEW_ID";
     public static final String EXTRA_REVIEW_LOCAL_ID = "com.ctse.androidgamereviewer.REVIEW_LOCAL_ID";
     public static final String EXTRA_REVIEW_USER_EMAIL = "com.ctse.androidgamereviewer.REVIEW_USER_EMAIL";
     public static final String EXTRA_REVIEW_GAME_ID = "com.ctse.androidgamereviewer.REVIEW_GAME_ID";
+
+    private List<Review> reviews = new ArrayList<>();
+    private Context mContext;
 
     public ReviewViewAdapter(Context mContext) {
         this.mContext = mContext;

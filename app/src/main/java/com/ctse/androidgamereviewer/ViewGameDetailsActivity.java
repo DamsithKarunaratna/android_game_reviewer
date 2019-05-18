@@ -50,12 +50,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewGameDetailsActivity extends AppCompatActivity {
 
+    // Request ID for adding a review
     public static final int ADD_REVIEW_REQUEST = 3;
 
     private GameViewModel gameViewModel;
     private ReviewViewModel reviewViewModel;
     private Game game;
-
     FirebaseUser user;
 
     @Override
@@ -65,11 +65,11 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        // Get reference for action bar
+        // hide the action bar programmatically
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
 
+        // initialize views
         final TextView tvGameTitle = findViewById(R.id.text_view_game_title);
         final TextView tvGameGenre = findViewById(R.id.text_view_genre);
         final TextView tvGameReleaseDate = findViewById(R.id.text_view_release_date);

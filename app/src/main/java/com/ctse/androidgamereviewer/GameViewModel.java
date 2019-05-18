@@ -36,22 +36,27 @@ public class GameViewModel extends AndroidViewModel {
         allGames = gameRepository.getAllGames();
     }
 
+    // Add a new game
     public void insert(Game game) {
         gameRepository.insert(game);
     }
 
+    // Add a game
     public void update(Game game) {
         gameRepository.update(game);
     }
 
+    // delete a game
     public void delete(Game game) {
         gameRepository.delete(game);
     }
 
+    // get a list of available games
     public LiveData<List<Game>> getAllGames() {
         return allGames;
     }
 
+    // return instance of gameRepository
     public GameRepository getGameRepository() {
         return gameRepository;
     }

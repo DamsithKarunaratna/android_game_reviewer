@@ -40,6 +40,12 @@ public class FileUtil {
 
     }
 
+    /**
+     *
+     * Created on: June 18, 2016
+     * Author: zetbaitsu
+     * GitHub: https://github.com/zetbaitsu/Compressor/blob/master/app/src/main/java/id/zelory/compressor/sample/FileUtil.java
+     */
     public static File from(Context context, Uri uri) throws IOException {
         InputStream inputStream = context.getContentResolver().openInputStream(uri);
         String fileName = getFileName(context, uri);
@@ -64,6 +70,11 @@ public class FileUtil {
         return tempFile;
     }
 
+    /**
+     * Created on: June 18, 2016
+     * Author: zetbaitsu
+     * GitHub: https://github.com/zetbaitsu/Compressor/blob/master/app/src/main/java/id/zelory/compressor/sample/FileUtil.java
+     */
     private static String[] splitFileName(String fileName) {
         String name = fileName;
         String extension = "";
@@ -76,6 +87,11 @@ public class FileUtil {
         return new String[]{name, extension};
     }
 
+    /**
+     * Created on: June 18, 2016
+     * Author: zetbaitsu
+     * GitHub: https://github.com/zetbaitsu/Compressor/blob/master/app/src/main/java/id/zelory/compressor/sample/FileUtil.java
+     */
     private static String getFileName(Context context, Uri uri) {
         String result = null;
         if (uri.getScheme().equals("content")) {
@@ -102,6 +118,11 @@ public class FileUtil {
         return result;
     }
 
+    /**
+     * Created on: June 18, 2016
+     * Author: zetbaitsu
+     * GitHub: https://github.com/zetbaitsu/Compressor/blob/master/app/src/main/java/id/zelory/compressor/sample/FileUtil.java
+     */
     private static File rename(File file, String newName) {
         File newFile = new File(file.getParent(), newName);
         if (!newFile.equals(file)) {
@@ -115,6 +136,11 @@ public class FileUtil {
         return newFile;
     }
 
+    /**
+     * Created on: June 18, 2016
+     * Author: zetbaitsu
+     * GitHub: https://github.com/zetbaitsu/Compressor/blob/master/app/src/main/java/id/zelory/compressor/sample/FileUtil.java
+     */
     private static long copy(InputStream input, OutputStream output) throws IOException {
         long count = 0;
         int n;

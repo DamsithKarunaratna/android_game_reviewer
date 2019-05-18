@@ -33,6 +33,7 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class LoginActivity extends AppCompatActivity {
 
+    // Integer request code for login intent
     public static final int RC_SIGN_IN = 1994;
 
     Button loginButton;
@@ -47,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         loginButton = findViewById(R.id.btn_login);
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

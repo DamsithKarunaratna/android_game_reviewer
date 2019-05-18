@@ -7,11 +7,6 @@
  */
 package com.ctse.androidgamereviewer;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,6 +19,11 @@ import android.widget.Toast;
 import com.ctse.androidgamereviewer.data.entities.Review;
 import com.google.android.material.textfield.TextInputEditText;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
 /**
  * AddReviewActivity is launched from the ViewGameDetailsActivity when Add Review button is clicked
  * or from ViewReviewActivity when Edit button is clicked
@@ -34,6 +34,7 @@ import com.google.android.material.textfield.TextInputEditText;
  */
 public class AddReviewActivity extends AppCompatActivity {
 
+    // String constants accessible statically from other classes used to tag Intent extras
     public static final String EXTRA_REVIEW_TITLE = "com.ctse.androidgamereviewer.EXTRA_REVIEW_TITLE";
     public static final String EXTRA_REVIEW_RATING = "com.ctse.androidgamereviewer.EXTRA_REVIEW_RATING";
     public static final String EXTRA_REVIEW_BODY = "com.ctse.androidgamereviewer.EXTRA_REVIEW_BODY";
@@ -42,20 +43,14 @@ public class AddReviewActivity extends AppCompatActivity {
     private EditText etReviewTitle;
     private TextInputEditText etReviewBody;
 
-    private ReviewViewModel reviewViewModel;
-
-    private String reviewId;
-
-    private int requestCode;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_review);
 
-        requestCode = getIntent().getIntExtra(MainActivity.REVIEW_REQUEST_CODE, -999);
+        int requestCode = getIntent().getIntExtra(MainActivity.REVIEW_REQUEST_CODE, -999);
 
-        reviewId = getIntent().getStringExtra(ReviewViewAdapter.EXTRA_REVIEW_ID);
+        String reviewId = getIntent().getStringExtra(ReviewViewAdapter.EXTRA_REVIEW_ID);
 
         // Set action bar close icon
         ActionBar actionBar = getSupportActionBar();
@@ -74,12 +69,12 @@ public class AddReviewActivity extends AppCompatActivity {
         etReviewBody = findViewById(R.id.input_edit_text_review);
 
 
-        /**
+        /*
          * If request code is update review, form fields will be filled from current review values
          * Observe current review data as a live data
          * */
         if (requestCode == ViewReviewActivity.EDIT_REVIEW_REQUEST) {
-            reviewViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
+            ReviewViewModel reviewViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
             reviewViewModel.getReviewById(reviewId).observe(this, new Observer<Review>() {
                 @Override
                 public void onChanged(Review review) {

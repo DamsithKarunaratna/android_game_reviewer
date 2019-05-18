@@ -65,15 +65,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
  */
 public class MainActivity extends AppCompatActivity {
 
+    // Integer request ID's for getting results from intents
     public static final int ADD_GAME_REQUEST = 2;
     public static final int LOGIN_REQUEST = 1995;
-
+    // Review request code tag for Intent extra
     public static final String REVIEW_REQUEST_CODE = "com.ctse.androidgamereviewer.REVIEW_REQUEST";
 
     private GameViewModel gameViewModel;
     private ReviewViewModel reviewViewModel;
-    SwipeRefreshLayout swipeRefreshLayout;
-    FirebaseUser user;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private FirebaseUser user;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.main_actionbar_title);
 
+        // retrieve currently logged in user (returns null if not logged in)
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
@@ -137,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
 
         reviewViewModel = ViewModelProviders.of(this).get(ReviewViewModel.class);
         reviewViewModel.getReviewRepository().refreshReviews();
-
         gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
         gameViewModel.getAllGames().observe(this, new Observer<List<Game>>() {
             @Override
@@ -150,16 +151,16 @@ public class MainActivity extends AppCompatActivity {
         addGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                user = FirebaseAuth.getInstance().getCurrentUser();
 
+                // get instance of currently logged in user to check if user is logged in or not
+                user = FirebaseAuth.getInstance().getCurrentUser();
                 if (null != user) {
-                    // Name, email address
-                    Log.d("gameApp", user.getDisplayName());
-                    Log.d("gameApp", user.getEmail());
-                    Intent intent = new Intent(MainActivity.this, AddGameActivity.class);
+                    Intent intent = new Intent(MainActivity.this,
+                            AddGameActivity.class);
                     startActivityForResult(intent, ADD_GAME_REQUEST);
                 } else {
-                    Toast.makeText(MainActivity.this, "you must be logged in to add a game",
+                    Toast.makeText(MainActivity.this,
+                            "you must be logged in to add a game",
                             Toast.LENGTH_SHORT).show();
                 }
 
@@ -189,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void addGame(@Nullable Intent data) {
 
+        // Get data passed through an Intent from AddGameActivity
         String title = data.getStringExtra(AddGameActivity.EXTRA_TITLE);
         String description = data.getStringExtra(AddGameActivity.EXTRA_DESCRIPTION);
         String releaseDate = data.getStringExtra(AddGameActivity.EXTRA_RELEASE_DATE);
@@ -196,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
 
         Game game = new Game();
         ObjectId objectId = new ObjectId();
-
         game.setTitle(title);
         game.setGenre(description);
         game.setRelease_date(releaseDate);

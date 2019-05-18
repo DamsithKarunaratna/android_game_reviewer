@@ -16,7 +16,7 @@
         android:maxLines="1"
         android:paddingStart="8dp"
         android:paddingTop="8dp"
-        android:text="This is the Title"
+        android:text="@string/this_is_the_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView

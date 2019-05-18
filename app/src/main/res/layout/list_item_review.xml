@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="start"
                 android:layout_marginEnd="6dp"
-                android:text="4/5"
+                android:text="@string/rating_fraction_dummy"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"/>
 
             <LinearLayout
@@ -41,14 +41,14 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="This is the Title"
+                    android:text="@string/this_is_the_title"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <TextView
                     android:id="@+id/text_view_review_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="This is the date of the review right here" />
+                    android:text="@string/date_added_label" />
             </LinearLayout>
 
         </LinearLayout>

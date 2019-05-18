@@ -3,4 +3,25 @@
     <string name="review_dummy">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </string>
+    <string name="add_a_new_game">Add a new Game</string>
+    <string name="add_game_instructions">Input details of the game and click the save icon in the top right corner</string>
+    <string name="add_game_title_hint">Title</string>
+    <string name="add_game_genre_hint">Genre</string>
+    <string name="add_game_release_date_hint">Release Date</string>
+    <string name="img_desc_game_image">game image</string>
+    <string name="click_to_add_image">click to add image</string>
+    <string name="review_hint">Review</string>
+    <string name="log_in_btn_txt">Log in</string>
+    <string name="this_is_the_title">This is the Title</string>
+    <string name="edit_btn_txt">EDIT</string>
+    <string name="delete_btn_txt">DELETE</string>
+    <string name="genre_label">Genre :</string>
+    <string name="dummy_n_a">N/A</string>
+    <string name="release_date_label">Release date :</string>
+    <string name="rating_fraction_dummy">4/5</string>
+    <string name="date_added_label">Date added :</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="account_menu">menu</string>
+    <string name="save">Save</string>
 </resources>

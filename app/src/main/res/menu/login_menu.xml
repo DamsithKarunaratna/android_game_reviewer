@@ -6,17 +6,17 @@
         android:id="@+id/account_menu"
         android:orderInCategory="100"
         android:icon="@drawable/ic_account_circle"
-        app:showAsAction="always"
-        android:title="account_menu">
+        app:showAsAction="ifRoom"
+        android:title="@string/account_menu">
         <menu>
             <item
                 android:id="@+id/login_menu_item"
-                android:title="Login"
+                android:title="@string/login"
                 app:showAsAction="withText" />
 
             <item
                 android:id="@+id/logout_menu_item"
-                android:title="Logout"
+                android:title="@string/logout"
                 app:showAsAction="withText" />
         </menu>
     </item>

@@ -11,12 +11,13 @@
         android:id="@+id/text_view_review_title_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:paddingTop="8dp"
-        android:text="This is the Title"
+        android:text="@string/this_is_the_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,14 +61,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="EDIT" />
+            android:text="@string/edit_btn_txt" />
 
         <Button
             android:id="@+id/button_delete_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="DELETE" />
+            android:text="@string/delete_btn_txt" />
     </LinearLayout>
 
 </RelativeLayout>

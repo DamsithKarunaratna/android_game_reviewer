@@ -23,7 +23,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/loginTextLight"
-            android:text="This is the Title"
+            android:text="@string/this_is_the_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <LinearLayout
@@ -36,14 +36,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/loginText"
-                android:text="Genre : " />
+                android:text="@string/genre_label" />
 
             <TextView
                 android:id="@+id/text_view_genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/loginText"
-                android:text="N/A" />
+                android:text="@string/dummy_n_a" />
         </LinearLayout>
 
         <LinearLayout
@@ -56,14 +56,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/loginText"
-                android:text="Release date : " />
+                android:text="@string/release_date_label" />
 
             <TextView
                 android:id="@+id/text_view_release_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/loginText"
-                android:text="N/A" />
+                android:text="@string/dummy_n_a" />
         </LinearLayout>
 
     </LinearLayout>

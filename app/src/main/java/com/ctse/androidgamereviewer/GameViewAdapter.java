@@ -16,8 +16,13 @@ import android.widget.TextView;
 
 import com.ctse.androidgamereviewer.data.entities.Game;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,11 +38,14 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHolder> {
 
-    private List<Game> games = new ArrayList<>();
-    private Context mContext;
-
     public static final String EXTRA_POSITION = "com.ctse.androidgamereviewer.POSITION";
     public static final String EXTRA_GAME_ID = "com.ctse.androidgamereviewer.GAME_ID";
+
+    private List<Game> games = new ArrayList<>();
+    private Context mContext;
+    private DateFormat m_ISO8601Local = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+            Locale.ENGLISH);
+
 
     public GameViewAdapter(Context mContext) {
         this.mContext = mContext;
@@ -56,6 +64,16 @@ public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHo
         final Game currentGame = games.get(position);
         holder.tvTitle.setText(currentGame.getTitle());
         holder.tvDescription.setText(currentGame.getGenre());
+
+        if(null!=currentGame.getRelease_date()) {
+            try {
+                Date date = m_ISO8601Local.parse(currentGame.getRelease_date());
+                holder.tvReleaseDate.setText(new SimpleDateFormat("yyyy-MM-dd",
+                        Locale.ENGLISH).format(date));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
 
         // Start ViewGameDetailsActivity
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -85,11 +103,13 @@ public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHo
     class GameHolder extends RecyclerView.ViewHolder {
         private TextView tvTitle;
         private TextView tvDescription;
+        private TextView tvReleaseDate;
 
         public GameHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.text_view_game_title);
             tvDescription = itemView.findViewById(R.id.text_view_genre);
+            tvReleaseDate = itemView.findViewById(R.id.text_view_release_date);
         }
     }
 }

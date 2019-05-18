@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
-        android:text="This is the genre of the game right here"
+        android:text="Game genere: N/A"
         android:layout_below="@id/text_view_game_title"/>
 
     <TextView
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
-        android:text="This is the release date of the game right here"
+        android:text="Release data: N/A"
         android:layout_below="@id/text_view_genre"/>
 
     <ImageView

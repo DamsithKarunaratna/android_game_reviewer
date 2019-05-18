@@ -1,45 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginLeft="8dp"
-    android:layout_marginEnd="8dp"
     android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    app:cardElevation="3dp">
+    android:layout_marginTop="13dp"
+    android:layout_marginEnd="8dp"
+    app:cardCornerRadius="7dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="@color/loginGrey">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="8dp">
 
         <TextView
             android:id="@+id/text_view_game_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/loginTextLight"
             android:text="This is the Title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <TextView
-            android:id="@+id/text_view_genre"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This is the description of the game right here"
-            android:layout_below="@id/text_view_game_title"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/text_view_release_date"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/label_text_view_genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/loginText"
+                android:text="Genre : " />
+
+            <TextView
+                android:id="@+id/text_view_genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/loginText"
+                android:text="N/A" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="This is the release date of the game right here"
-            android:layout_below="@id/text_view_genre"/>
+            android:orientation="horizontal">
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/label_text_view_release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/loginText"
+                android:text="Release date : " />
+
+            <TextView
+                android:id="@+id/text_view_release_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/loginText"
+                android:text="N/A" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>

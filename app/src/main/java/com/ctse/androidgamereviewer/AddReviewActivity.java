@@ -1,4 +1,4 @@
-/**
+/*
  * CTSE Android Project - Game Reviewer
  * @author IT16037434 Karunaratne D. C.
  * @author IT15146366 Hettiarachchi H. A. I. S.
@@ -7,7 +7,6 @@
  */
 package com.ctse.androidgamereviewer;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;

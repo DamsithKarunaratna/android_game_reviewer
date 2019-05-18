@@ -1,4 +1,4 @@
-/**
+/*
  * CTSE Android Project - Game Reviewer
  * @author IT16037434 Karunaratne D. C.
  * @author IT15146366 Hettiarachchi H. A. I. S.

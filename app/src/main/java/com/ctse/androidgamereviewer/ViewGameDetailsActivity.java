@@ -67,7 +67,8 @@ public class ViewGameDetailsActivity extends AppCompatActivity {
 
         // Get reference for action bar
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.hide();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
 
         final TextView tvGameTitle = findViewById(R.id.text_view_game_title);
         final TextView tvGameGenre = findViewById(R.id.text_view_genre);

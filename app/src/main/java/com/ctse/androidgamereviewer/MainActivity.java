@@ -29,6 +29,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -115,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.main_actionbar_title);
+
         user = FirebaseAuth.getInstance().getCurrentUser();
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
@@ -155,9 +159,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, AddGameActivity.class);
                     startActivityForResult(intent, ADD_GAME_REQUEST);
                 } else {
-                    Toast.makeText(MainActivity.this, "you must be logged in",
+                    Toast.makeText(MainActivity.this, "you must be logged in to add a game",
                             Toast.LENGTH_SHORT).show();
-                    openLoginActivity();
                 }
 
             }

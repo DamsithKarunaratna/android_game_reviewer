@@ -24,4 +24,5 @@
     <string name="logout">Logout</string>
     <string name="account_menu">menu</string>
     <string name="save">Save</string>
+    <string name="main_actionbar_title">Games List</string>
 </resources>

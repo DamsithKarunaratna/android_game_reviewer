@@ -64,16 +64,7 @@ public class GameViewAdapter extends RecyclerView.Adapter<GameViewAdapter.GameHo
         final Game currentGame = games.get(position);
         holder.tvTitle.setText(currentGame.getTitle());
         holder.tvDescription.setText(currentGame.getGenre());
-
-        if(null!=currentGame.getRelease_date()) {
-            try {
-                Date date = m_ISO8601Local.parse(currentGame.getRelease_date());
-                holder.tvReleaseDate.setText(new SimpleDateFormat("yyyy-MM-dd",
-                        Locale.ENGLISH).format(date));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
+        holder.tvReleaseDate.setText(currentGame.getRelease_date());
 
         // Start ViewGameDetailsActivity
         holder.itemView.setOnClickListener(new View.OnClickListener() {

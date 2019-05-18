@@ -48,7 +48,7 @@
             android:hint="@string/add_game_release_date_hint"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="date" />
+            android:inputType="none" />
 
         <ImageButton
             android:id="@+id/btn_open_date_picker"

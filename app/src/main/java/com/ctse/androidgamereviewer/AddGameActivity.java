@@ -10,9 +10,12 @@ package com.ctse.androidgamereviewer;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,14 +26,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.ctse.androidgamereviewer.helpers.FileUtil;
 import com.tsongkha.spinnerdatepicker.DatePicker;
 import com.tsongkha.spinnerdatepicker.DatePickerDialog;
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import id.zelory.compressor.Compressor;
 
 /**
  * AddGameActivity is launched from the MainActivity when the floating action button is clicked.
@@ -55,6 +62,7 @@ public class AddGameActivity extends AppCompatActivity implements
     private EditText etDate;
     private ImageView imageView;
     private ImageButton imageButton;
+    private File actualImage;
 
     DatePickerDialog datePickerDialog;
 
@@ -130,9 +138,26 @@ public class AddGameActivity extends AppCompatActivity implements
         if (resultCode == Activity.RESULT_OK)
             switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
-                    //data.getData returns the content URI for the selected Image
-                    Uri selectedImage = data.getData();
-                    imageView.setImageURI(selectedImage);
+                    try {
+                        actualImage = FileUtil.from(this, data.getData());
+
+                        Bitmap bitmap = new Compressor(this)
+                                .setMaxWidth(400)
+                                .setMaxHeight(600)
+                                .setQuality(75)
+                                .setCompressFormat(Bitmap.CompressFormat.WEBP)
+                                .compressToBitmap(actualImage);
+
+                        imageView.setImageBitmap(bitmap);
+                        System.out.println("Byte count " + ((BitmapDrawable)imageView.getDrawable())
+                                .getBitmap().getByteCount());
+
+                    } catch (IOException e) {
+                        Toast.makeText(this, "Failed to read picture data!",
+                                Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+
                     break;
             }
     }
@@ -148,7 +173,7 @@ public class AddGameActivity extends AppCompatActivity implements
     private String getBase64Image(BitmapDrawable drawable) {
         Bitmap bitmap = drawable.getBitmap();
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 90, bos);
+        bitmap.compress(Bitmap.CompressFormat.WEBP, 90, bos);
         byte[] bb = bos.toByteArray();
         return Base64.encodeToString(bb, Base64.NO_WRAP);
     }

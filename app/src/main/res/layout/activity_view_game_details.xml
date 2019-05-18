@@ -16,6 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="#ffffff"
+        android:scaleType="fitStart"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -31,27 +32,55 @@
         android:text="@string/this_is_the_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-    <TextView
-        android:id="@+id/text_view_genre"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linear_layout_genre"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
-        android:text="Game genere: N/A"
-        android:layout_below="@id/text_view_game_title"/>
+        android:paddingEnd="8dp"
+        android:layout_below="@id/text_view_game_title"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/text_view_release_date"
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/genre_label"/>
+
+        <TextView
+            android:id="@+id/text_view_genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_n_a"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_release"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
-        android:text="Release data: N/A"
-        android:layout_below="@id/text_view_genre"/>
+        android:paddingEnd="8dp"
+        android:layout_below="@id/linear_layout_genre"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/release_date_label"/>
+
+        <TextView
+            android:id="@+id/text_view_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dummy_n_a"/>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/relative_layout_reviews_container"
-        android:layout_below="@id/text_view_release_date">
+        android:layout_below="@id/linear_layout_release">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_reviews"

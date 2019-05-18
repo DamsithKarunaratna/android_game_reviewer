@@ -1,3 +1,10 @@
+/*
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: ReviewDAO.java
+ */
 package com.ctse.androidgamereviewer.data.dao;
 
 import com.ctse.androidgamereviewer.data.entities.Review;
@@ -41,5 +48,8 @@ public abstract class ReviewDAO {
 
     @Query("SELECT * FROM Review")
     public abstract LiveData<List<Review>> getAllReviews();
+
+    @Query("SELECT * FROM Review WHERE remote_id =:reviewId")
+    public abstract LiveData<Review> getReviewById(String reviewId);
 
 }

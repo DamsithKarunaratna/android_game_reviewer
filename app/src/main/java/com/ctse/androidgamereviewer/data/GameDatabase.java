@@ -1,3 +1,10 @@
+/*
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: GameDatabase.java
+ */
 package com.ctse.androidgamereviewer.data;
 
 import android.content.Context;
@@ -19,7 +26,7 @@ import androidx.room.RoomDatabase;
  * <a href="https://developer.android.com/topic/libraries/architecture/room">
  * Official Room Documentation</a>
  */
-@Database(entities = {Game.class, Review.class}, version = 5, exportSchema = false)
+@Database(entities = {Game.class, Review.class}, version = 6, exportSchema = false)
 public abstract class GameDatabase extends RoomDatabase {
 
     private static GameDatabase instance;

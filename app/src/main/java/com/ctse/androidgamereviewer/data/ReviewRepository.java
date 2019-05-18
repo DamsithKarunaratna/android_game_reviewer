@@ -1,3 +1,10 @@
+/*
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: ReviewRepository.java
+ */
 package com.ctse.androidgamereviewer.data;
 
 import android.app.Application;
@@ -76,7 +83,7 @@ public class ReviewRepository {
     }
 
     /**
-     * inserts a new review object into the database. Game is inserted into the local database as
+     * inserts a new review object into the database. Review is inserted into the local database as
      * well as the remote database. To avoid blocking the main thread, database operations are
      * carried out on separate threads. This enables a smooth user experience.
      *
@@ -104,12 +111,68 @@ public class ReviewRepository {
         });
     }
 
-    public void update(Review review) {
+    /**
+     * Update a review object in the database. Review is updated in the local database as
+     * well as the remote database. To avoid blocking the main thread, database operations are
+     * carried out on separate threads. This enables a smooth user experience.
+     *
+     * @param review review object to be updated.
+     */
+    public void update(final Review review) {
         new UpdateReviewAsyncTask(reviewDAO).execute(review);
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                webService.updateReview(review.get_id(), review).enqueue(new Callback<Review>() {
+                    @Override
+                    public void onResponse(Call<Review> call, Response<Review> response) {
+                        System.out.println("Review edited on online DB");
+                        System.out.println(response.body().toString());
+                        Log.d("ReviewRepository", "onResponse: Review edited on online DB");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Review> call, Throwable t) {
+                        System.out.println("Game not edited");
+                        Log.d("ReviewRepository", "onResponse: Game not edited");
+                        t.printStackTrace();
+                    }
+                });
+            }
+        });
     }
 
-    public void delete(Review review) {
+    /**
+     * Deletes review object from the database. Review is delete from the local database as
+     * well as the remote database. To avoid blocking the main thread, database operations are
+     * carried out on separate threads. This enables a smooth user experience.
+     *
+     * @param review review object to be deleted.
+     */
+    public void delete(final Review review) {
         new DeleteReviewAsyncTask(reviewDAO).execute(review);
+
+        executor.execute((new Runnable() {
+            @Override
+            public void run() {
+                webService.deleteReview(review.get_id()).enqueue(new Callback<Review>() {
+                    @Override
+                    public void onResponse(Call<Review> call, Response<Review> response) {
+                        System.out.println("Review deleted online DB");
+                        System.out.println(response.body().toString());
+                        Log.d("ReviewRepository", "onResponse: Review deleted online DB");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Review> call, Throwable t) {
+                        System.out.println("Review not deleted");
+                        Log.d("ReviewRepository", "onResponse: Review not deleted");
+                        t.printStackTrace();
+                    }
+                });
+            }
+        }));
     }
 
     public LiveData<List<Review>> getAllReviews() {
@@ -118,6 +181,10 @@ public class ReviewRepository {
 
     public LiveData<List<Review>> getReviewsForGame(String game_id) {
         return database.reviewDAO().getReviewsByGameId(game_id);
+    }
+
+    public LiveData<Review> getReviewById(String review_id) {
+        return database.reviewDAO().getReviewById(review_id);
     }
 
     private static class InsertReviewAsyncTask extends AsyncTask<Review, Void, Void> {

@@ -1,3 +1,10 @@
+/*
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: AddGameActivity.java
+ */
 package com.ctse.androidgamereviewer;
 
 import android.app.Activity;
@@ -134,6 +141,9 @@ public class AddGameActivity extends AppCompatActivity implements
      * Helper method to encode Bitmap image as a Base64 String.
      * @param drawable Image to be encoded.
      * @return Base64 encoded image.
+     *
+     * @see <a href="https://stackoverflow.com/questions/36492084/how-to-convert-an-image-to-base64-string-in-java">
+     *     This stackoverflow question</a>
      */
     private String getBase64Image(BitmapDrawable drawable) {
         Bitmap bitmap = drawable.getBitmap();

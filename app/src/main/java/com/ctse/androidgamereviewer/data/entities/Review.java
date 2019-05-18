@@ -1,3 +1,10 @@
+/*
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: Review.java
+ */
 package com.ctse.androidgamereviewer.data.entities;
 
 import androidx.room.ColumnInfo;
@@ -21,6 +28,7 @@ public class Review {
 
     @ColumnInfo(name = "remote_id")
     private String _id;
+    private String userEmail;
     private String gameId;
     private String title;
     private String body;
@@ -28,6 +36,14 @@ public class Review {
     private int rating;
 
     public Review() {
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public int getId() {

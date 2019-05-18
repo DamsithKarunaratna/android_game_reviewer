@@ -1,3 +1,10 @@
+/*
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: MainActivity.java
+ */
 package com.ctse.androidgamereviewer;
 
 import android.content.Intent;
@@ -59,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int ADD_GAME_REQUEST = 2;
     public static final int LOGIN_REQUEST = 1995;
+
+    public static final String REVIEW_REQUEST_CODE = "com.ctse.androidgamereviewer.REVIEW_REQUEST";
 
     private GameViewModel gameViewModel;
     private ReviewViewModel reviewViewModel;

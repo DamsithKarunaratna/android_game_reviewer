@@ -1,3 +1,10 @@
+/*
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: ReviewViewModel.java
+ */
 package com.ctse.androidgamereviewer;
 
 import android.app.Application;
@@ -11,6 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+/**
+ * Abstracts Data handling logic out of the MainActivity UI controller.
+ * Consists of a gameRepository which handles CRUD operations at a high level.
+ * <p>
+ * See <a href="https://developer.android.com/topic/libraries/architecture/viewmodel">
+ * Documentation </a> for more details.
+ **/
 public class ReviewViewModel extends AndroidViewModel {
 
     private ReviewRepository reviewRepository;
@@ -40,6 +54,10 @@ public class ReviewViewModel extends AndroidViewModel {
 
     public LiveData<List<Review>> getReviewForGame(String game_id) {
         return reviewRepository.getReviewsForGame(game_id);
+    }
+
+    public LiveData<Review> getReviewById(String review_id) {
+        return reviewRepository.getReviewById(review_id);
     }
 
     public ReviewRepository getReviewRepository() {

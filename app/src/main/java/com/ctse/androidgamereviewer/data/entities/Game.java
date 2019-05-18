@@ -1,3 +1,10 @@
+/*
+ * CTSE Android Project - Game Reviewer
+ * @author IT16037434 Karunaratne D. C.
+ * @author IT15146366 Hettiarachchi H. A. I. S.
+ *
+ * File: Game.java
+ */
 package com.ctse.androidgamereviewer.data.entities;
 
 import androidx.room.ColumnInfo;

@@ -32,6 +32,7 @@ public class Game {
     private String genre;
     private String image;
     private String release_date;
+    private String owner_email;
 
     public Game() {
     }
@@ -82,5 +83,13 @@ public class Game {
 
     public void setRelease_date(String release_date) {
         this.release_date = release_date;
+    }
+
+    public String getOwner_email() {
+        return owner_email;
+    }
+
+    public void setOwner_email(String owner_email) {
+        this.owner_email = owner_email;
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,104 +7,117 @@
     android:background="@drawable/info_card_gradient"
     >
 
-    <ImageView
-        android:id="@+id/image_view_game_image"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="#30ffffff"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <LinearLayout
-        android:id="@+id/linear_layout_info"
-        android:padding="10dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/image_view_game_image">
-        <TextView
-            android:id="@+id/text_view_game_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="#CFE3F1"
-            android:text="@string/this_is_the_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-        <LinearLayout
-            android:id="@+id/linear_layout_genre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#CFE3F1"
-                android:text="@string/genre_label"/>
-
-            <TextView
-                android:id="@+id/text_view_genre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#CFE3F1"
-                android:text="@string/dummy_n_a"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/linear_layout_release"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#CFE3F1"
-                android:text="@string/release_date_label"/>
-
-            <TextView
-                android:id="@+id/text_view_release_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#CFE3F1"
-                android:text="@string/dummy_n_a"/>
-
-        </LinearLayout>
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/relative_layout_reviews_container"
-        android:layout_below="@id/linear_layout_info">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_reviews"
+        <ImageView
+            android:id="@+id/image_view_game_image"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="#30ffffff"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <LinearLayout
+            android:id="@+id/linear_layout_info"
+            android:padding="10dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            tools:listitem="@layout/list_item_review"/>
+            android:layout_below="@+id/image_view_game_image">
+            <TextView
+                android:id="@+id/text_view_game_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#CFE3F1"
+                android:text="@string/this_is_the_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            <LinearLayout
+                android:id="@+id/linear_layout_genre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#CFE3F1"
+                    android:text="@string/genre_label"/>
+
+                <TextView
+                    android:id="@+id/text_view_genre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#CFE3F1"
+                    android:text="@string/dummy_n_a"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linear_layout_release"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#CFE3F1"
+                    android:text="@string/release_date_label"/>
+
+                <TextView
+                    android:id="@+id/text_view_release_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#CFE3F1"
+                    android:text="@string/dummy_n_a"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relative_layout_reviews_container"
+            android:layout_below="@id/linear_layout_info">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                tools:listitem="@layout/list_item_review"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/button_add_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:backgroundTint="@color/buttonTint"
+            android:text="Add Review" />
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/button_add_review"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_edit_game"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="4dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="48dp"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:backgroundTint="@color/buttonTint"
-        android:text="Add Review" />
+        android:layout_gravity="top|end"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/ic_edit" />
 
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

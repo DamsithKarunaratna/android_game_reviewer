@@ -9,4 +9,5 @@
     <color name="loginBlueDark">#007AC5</color>
     <color name="loginText">#859AB1</color>
     <color name="loginTextLight">#AAC4E7</color>
+    <color name="buttonTint">#b2dfdb</color>
 </resources>

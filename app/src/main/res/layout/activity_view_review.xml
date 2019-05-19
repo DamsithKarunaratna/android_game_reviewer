@@ -61,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/buttonTint"
             android:text="@string/edit_btn_txt" />
 
         <Button
@@ -68,6 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/buttonTint"
             android:text="@string/delete_btn_txt" />
     </LinearLayout>
 

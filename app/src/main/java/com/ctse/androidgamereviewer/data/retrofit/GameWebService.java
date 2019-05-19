@@ -34,6 +34,9 @@ public interface GameWebService {
     @POST("/games")
     Call<Game> saveGame(@Body Game game);
 
+    @PUT("/games/{game_id}")
+    Call<Game> updateGame(@Path("game_id") String game_id, @Body Game game);
+
     @POST("/reviews")
     Call<Review> saveReview(@Body Review review);
 

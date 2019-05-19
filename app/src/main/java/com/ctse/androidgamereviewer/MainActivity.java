@@ -9,7 +9,6 @@ package com.ctse.androidgamereviewer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,11 +69,18 @@ public class MainActivity extends AppCompatActivity {
     public static final int LOGIN_REQUEST = 1995;
     // Review request code tag for Intent extra
     public static final String REVIEW_REQUEST_CODE = "com.ctse.androidgamereviewer.REVIEW_REQUEST";
+    public static final String EXTRA_REQUEST_CODE = "com.ctse.androidgamereviewer.REQUEST_TYPE";
 
     private GameViewModel gameViewModel;
     private ReviewViewModel reviewViewModel;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FirebaseUser user;
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        intent.putExtra(EXTRA_REQUEST_CODE, requestCode);
+        super.startActivityForResult(intent, requestCode);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -172,13 +178,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_GAME_REQUEST && resultCode == RESULT_OK) {
-            addGame(data);
-        } else if (requestCode == LOGIN_REQUEST && resultCode == RESULT_OK) {
-            this.invalidateOptionsMenu();
-            this.supportInvalidateOptionsMenu();
+        if (requestCode == ADD_GAME_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                addGame(data);
+            } else {
+                Toast.makeText(this, "Game not saved", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == LOGIN_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                this.invalidateOptionsMenu();
+                this.supportInvalidateOptionsMenu();
+            } else {
+                Toast.makeText(this, "Login canceled", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(this, "Game not saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "activity canceled", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -192,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Get data passed through an Intent from AddGameActivity
         String title = data.getStringExtra(AddGameActivity.EXTRA_TITLE);
-        String description = data.getStringExtra(AddGameActivity.EXTRA_DESCRIPTION);
+        String description = data.getStringExtra(AddGameActivity.EXTRA_GENRE);
         String releaseDate = data.getStringExtra(AddGameActivity.EXTRA_RELEASE_DATE);
         String image = data.getStringExtra(AddGameActivity.EXTRA_IMAGE);
 
@@ -203,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
         game.setRelease_date(releaseDate);
         game.setImage(image);
         game.set_id(objectId.toString());
+        game.setOwner_email(FirebaseAuth.getInstance().getCurrentUser().getEmail());
 
         gameViewModel.insert(game);
 

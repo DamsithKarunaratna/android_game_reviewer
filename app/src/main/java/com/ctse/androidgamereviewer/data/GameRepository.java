@@ -117,8 +117,28 @@ public class GameRepository {
         });
     }
 
-    public void update(Game game) {
+    public void update(final Game game) {
+        // local update
         new UpdateGameAsyncTask(gameDAO).execute(game);
+
+        // remote update
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                webService.updateGame(game.get_id(), game).enqueue(new Callback<Game>() {
+                    @Override
+                    public void onResponse(Call<Game> call, Response<Game> response) {
+                        Log.d("gameApp", "Game updated on remote DB");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Game> call, Throwable t) {
+                        Log.d("gameApp", "Game not updated");
+                        t.printStackTrace();
+                    }
+                });
+            }
+        });
     }
 
     public void delete(Game game) {
@@ -217,7 +237,7 @@ public class GameRepository {
                     @Override
                     public void onFailure(Call<List<Game>> call, Throwable t) {
                         swipeRefreshLayout.setRefreshing(false);
-                        Log.d("gameApp","FAILURE IN DB CALL");
+                        Log.d("gameApp", "FAILURE IN DB CALL");
                         t.printStackTrace();
                     }
                 });

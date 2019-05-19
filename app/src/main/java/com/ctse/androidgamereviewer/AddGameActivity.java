@@ -52,7 +52,7 @@ public class AddGameActivity extends AppCompatActivity implements
 
     // String constants accessible statically from other classes used to tag Intent extras
     public static final String EXTRA_TITLE = "com.ctse.androidgamereviewer.EXTRA_TITLE";
-    public static final String EXTRA_DESCRIPTION = "com.ctse.androidgamereviewer.EXTRA_DESCRIPTION";
+    public static final String EXTRA_GENRE = "com.ctse.androidgamereviewer.EXTRA_GENRE";
     public static final String EXTRA_RELEASE_DATE = "com.ctse.androidgamereviewer.EXTRA_RELEASE_DATE";
     public static final String EXTRA_IMAGE = "com.ctse.androidgamereviewer.EXTRA_IMAGE";
 
@@ -77,6 +77,9 @@ public class AddGameActivity extends AppCompatActivity implements
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_game);
+
+        int requestCode = getIntent().getIntExtra(MainActivity.EXTRA_REQUEST_CODE,
+                -999);
 
         // Initialize views
         etTitle = findViewById(R.id.edit_text_game_title);
@@ -117,7 +120,23 @@ public class AddGameActivity extends AppCompatActivity implements
         });
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        setTitle("Add Game");
+
+        switch (requestCode) {
+            case MainActivity.ADD_GAME_REQUEST:
+                setTitle("Add Game");
+                break;
+            case ViewGameDetailsActivity.EDIT_GAME_REQUEST:
+                setTitle("Edit Game");
+                etTitle.setText(getIntent().getStringExtra(EXTRA_TITLE));
+                etGenre.setText(getIntent().getStringExtra(EXTRA_GENRE));
+                etDate.setText(getIntent().getStringExtra(EXTRA_RELEASE_DATE));
+                Bitmap bmp = ViewGameDetailsActivity.decodeBase64(getIntent()
+                        .getStringExtra(EXTRA_IMAGE));
+                if (bmp != null) {
+                    imageView.setImageBitmap(bmp);
+                }
+                break;
+        }
     }
 
     @Override
@@ -152,7 +171,6 @@ public class AddGameActivity extends AppCompatActivity implements
             switch (requestCode) {
                 case GALLERY_REQUEST_CODE:
                     try {
-
                         /*
                          * "id.zelory:compressor:2.1.0" library used for compressing bitmap images
                          * This saves bandwidth when saving the image as well as allows safe
@@ -222,11 +240,12 @@ public class AddGameActivity extends AppCompatActivity implements
      * persisted.
      */
     private void saveGame() {
+
         String title = etTitle.getText().toString().trim();
-        String description = etGenre.getText().toString().trim();
+        String genre = etGenre.getText().toString().trim();
         String releaseDate = etDate.getText().toString().trim();
 
-        if (title.isEmpty() || description.isEmpty()) {
+        if (title.isEmpty() || genre.isEmpty()) {
             Toast.makeText(this, "Please insert Title and Description",
                     Toast.LENGTH_SHORT).show();
             return;
@@ -236,13 +255,15 @@ public class AddGameActivity extends AppCompatActivity implements
             return;
         }
 
+        int requestCode = getIntent().getIntExtra(MainActivity.EXTRA_REQUEST_CODE,
+                -999);
+
         Intent saveGameIntent = new Intent();
         saveGameIntent.putExtra(EXTRA_TITLE, title);
-        saveGameIntent.putExtra(EXTRA_DESCRIPTION, description);
+        saveGameIntent.putExtra(EXTRA_GENRE, genre);
         saveGameIntent.putExtra(EXTRA_RELEASE_DATE, releaseDate);
         saveGameIntent.putExtra(EXTRA_IMAGE, getBase64Image(
                 (BitmapDrawable) imageView.getDrawable()));
-
         setResult(RESULT_OK, saveGameIntent);
         finish();
 

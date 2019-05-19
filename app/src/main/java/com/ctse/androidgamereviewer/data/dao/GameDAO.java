@@ -31,22 +31,22 @@ import static androidx.room.OnConflictStrategy.REPLACE;
 @Dao
 public abstract class GameDAO {
 
-    @Insert(onConflict = REPLACE)
-    public abstract void insertGame(Game game);
+  @Insert(onConflict = REPLACE)
+  public abstract void insertGame(Game game);
 
-    @Insert(onConflict = REPLACE)
-    public abstract void insertMany(List<Game> games);
+  @Insert(onConflict = REPLACE)
+  public abstract void insertMany(List<Game> games);
 
-    @Update
-    public abstract void update(Game game);
+  @Update
+  public abstract void update(Game game);
 
-    @Delete
-    public abstract void delete(Game game);
+  @Delete
+  public abstract void delete(Game game);
 
-    @Query("SELECT * FROM Game WHERE id =:id")
-    public abstract Game getGame(int id);
+  @Query("SELECT * FROM Game WHERE id =:id")
+  public abstract Game getGame(int id);
 
-    @Query("SELECT * FROM Game")
-    public abstract LiveData<List<Game>> getAllGames();
+  @Query("SELECT * FROM Game")
+  public abstract LiveData<List<Game>> getAllGames();
 
 }

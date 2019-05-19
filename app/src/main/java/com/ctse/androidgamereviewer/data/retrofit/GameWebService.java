@@ -12,6 +12,7 @@ import com.ctse.androidgamereviewer.data.entities.Review;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -24,28 +25,31 @@ import retrofit2.http.Path;
  * Retrofit is a type-safe HTTP client for Android and Java
  * <p>
  * See <a href="https://square.github.io/retrofit/">Retrofit documentation</a> for more information
- * */
+ */
 
 public interface GameWebService {
 
-    @GET("games/")
-    Call<List<Game>> getGames();
+  @GET("games/")
+  Call<List<Game>> getGames();
 
-    @POST("/games")
-    Call<Game> saveGame(@Body Game game);
+  @POST("/games")
+  Call<Game> saveGame(@Body Game game);
 
-    @PUT("/games/{game_id}")
-    Call<Game> updateGame(@Path("game_id") String game_id, @Body Game game);
+  @PUT("/games/{game_id}")
+  Call<Game> updateGame(@Path("game_id") String game_id, @Body Game game);
 
-    @POST("/reviews")
-    Call<Review> saveReview(@Body Review review);
+  @DELETE("/games/{game_id}")
+  Call<ResponseBody> deleteGame(@Path("game_id") String game_id);
 
-    @PUT("/reviews/{review_id}")
-    Call<Review> updateReview(@Path("review_id") String review_id, @Body Review review);
+  @POST("/reviews")
+  Call<Review> saveReview(@Body Review review);
 
-    @DELETE("/reviews/{review_id}")
-    Call<Review> deleteReview(@Path("review_id") String review_id);
+  @PUT("/reviews/{review_id}")
+  Call<Review> updateReview(@Path("review_id") String review_id, @Body Review review);
 
-    @GET("reviews/")
-    Call<List<Review>> getReviews();
+  @DELETE("/reviews/{review_id}")
+  Call<Review> deleteReview(@Path("review_id") String review_id);
+
+  @GET("reviews/")
+  Call<List<Review>> getReviews();
 }

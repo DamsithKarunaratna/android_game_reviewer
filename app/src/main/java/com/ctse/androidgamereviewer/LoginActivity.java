@@ -26,69 +26,69 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * A login screen which acts as the starting point in the authentication flow.
  * Authentication is handled by Firebase authentication.
- *
+ * <p>
  * See <a href="https://firebase.google.com/docs/auth/android/firebaseui">
  * FirebaseUI documentation
  * </a> for more information.
  */
 public class LoginActivity extends AppCompatActivity {
 
-    // Integer request code for login intent
-    public static final int RC_SIGN_IN = 1994;
+  // Integer request code for login intent
+  public static final int RC_SIGN_IN = 1994;
 
-    Button loginButton;
+  Button loginButton;
 
-    // Choose FireBase authentication providers
-    List<AuthUI.IdpConfig> providers = Arrays.asList(
-            new AuthUI.IdpConfig.EmailBuilder().build());
+  // Choose FireBase authentication providers
+  List<AuthUI.IdpConfig> providers = Arrays.asList(
+      new AuthUI.IdpConfig.EmailBuilder().build());
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_splash);
 
-        loginButton = findViewById(R.id.btn_login);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(
-                        AuthUI.getInstance()
-                                .createSignInIntentBuilder()
-                                .setAvailableProviders(providers)
-                                .build(),
-                        RC_SIGN_IN);
-            }
-        });
-    }
+    loginButton = findViewById(R.id.btn_login);
+    loginButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        startActivityForResult(
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build(),
+            RC_SIGN_IN);
+      }
+    });
+  }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
+    if (requestCode == RC_SIGN_IN) {
+      IdpResponse response = IdpResponse.fromResultIntent(data);
 
-            if (resultCode == RESULT_OK) {
+      if (resultCode == RESULT_OK) {
 
-                // Successfully signed in
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+        // Successfully signed in
+        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
 
-                setResult(RESULT_OK);
-                finish();
+        setResult(RESULT_OK);
+        finish();
 
-            } else {
+      } else {
 
-                // Sign in failed. If response is null the user canceled the
-                if (null != response) {
-                    Toast.makeText(this, "Error in log in", Toast.LENGTH_SHORT).show();
-                    response.getError().printStackTrace();
-                } else {
-                    Toast.makeText(this, "Login canceled", Toast.LENGTH_SHORT).show();
-                }
-                setResult(RESULT_OK);
-                finish();
-
-            }
+        // Sign in failed. If response is null the user canceled the
+        if (null != response) {
+          Toast.makeText(this, "Error in log in", Toast.LENGTH_SHORT).show();
+          response.getError().printStackTrace();
+        } else {
+          Toast.makeText(this, "Login canceled", Toast.LENGTH_SHORT).show();
         }
+        setResult(RESULT_OK);
+        finish();
+
+      }
     }
+  }
 }

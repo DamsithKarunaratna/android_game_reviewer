@@ -172,13 +172,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_GAME_REQUEST && resultCode == RESULT_OK) {
-            addGame(data);
-        } else if (requestCode == LOGIN_REQUEST && resultCode == RESULT_OK) {
-            this.invalidateOptionsMenu();
-            this.supportInvalidateOptionsMenu();
+        if (requestCode == ADD_GAME_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                addGame(data);
+            } else {
+                Toast.makeText(this, "Game not saved", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == LOGIN_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                this.invalidateOptionsMenu();
+                this.supportInvalidateOptionsMenu();
+            } else {
+                Toast.makeText(this, "Login canceled", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(this, "Game not saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "activity canceled", Toast.LENGTH_SHORT).show();
         }
     }
 

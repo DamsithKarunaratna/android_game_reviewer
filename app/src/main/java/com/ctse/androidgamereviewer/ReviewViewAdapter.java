@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.ctse.androidgamereviewer.data.entities.Review;
@@ -62,6 +63,7 @@ public class ReviewViewAdapter extends RecyclerView.Adapter<ReviewViewAdapter.Re
     holder.tvReviewDate.setText(currentReview.getDate());
     holder.tvReviewBody.setText(currentReview.getBody());
     holder.tvRating.setText(currentReview.getRating() + "/5");
+    holder.ratingBar.setRating(currentReview.getRating());
 
     // Start ViewReviewActivity
     holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +98,7 @@ public class ReviewViewAdapter extends RecyclerView.Adapter<ReviewViewAdapter.Re
     private TextView tvReviewDate;
     private TextView tvReviewBody;
     private TextView tvRating;
+    private RatingBar ratingBar;
 
     public ReviewHolder(@NonNull View itemView) {
       super(itemView);
@@ -103,6 +106,7 @@ public class ReviewViewAdapter extends RecyclerView.Adapter<ReviewViewAdapter.Re
       tvReviewBody = itemView.findViewById(R.id.text_view_review_body);
       tvReviewDate = itemView.findViewById(R.id.text_view_review_date);
       tvReviewTitle = itemView.findViewById(R.id.text_view_review_title);
+      ratingBar = itemView.findViewById(R.id.list_item_rating_bar);
     }
   }
 

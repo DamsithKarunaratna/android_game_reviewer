@@ -27,40 +27,40 @@ import androidx.lifecycle.LiveData;
  **/
 public class ReviewViewModel extends AndroidViewModel {
 
-    private ReviewRepository reviewRepository;
-    private LiveData<List<Review>> allReviews;
+  private ReviewRepository reviewRepository;
+  private LiveData<List<Review>> allReviews;
 
-    public ReviewViewModel(@NonNull Application application) {
-        super(application);
-        reviewRepository = new ReviewRepository(application);
-        allReviews = reviewRepository.getAllReviews();
-    }
+  public ReviewViewModel(@NonNull Application application) {
+    super(application);
+    reviewRepository = new ReviewRepository(application);
+    allReviews = reviewRepository.getAllReviews();
+  }
 
-    public void insert(Review review) {
-        reviewRepository.insert(review);
-    }
+  public void insert(Review review) {
+    reviewRepository.insert(review);
+  }
 
-    public void update(Review review) {
-        reviewRepository.update(review);
-    }
+  public void update(Review review) {
+    reviewRepository.update(review);
+  }
 
-    public void delete(Review review) {
-        reviewRepository.delete(review);
-    }
+  public void delete(Review review) {
+    reviewRepository.delete(review);
+  }
 
-    public LiveData<List<Review>> getAllReviews() {
-        return allReviews;
-    }
+  public LiveData<List<Review>> getAllReviews() {
+    return allReviews;
+  }
 
-    public LiveData<List<Review>> getReviewForGame(String game_id) {
-        return reviewRepository.getReviewsForGame(game_id);
-    }
+  public LiveData<List<Review>> getReviewForGame(String game_id) {
+    return reviewRepository.getReviewsForGame(game_id);
+  }
 
-    public LiveData<Review> getReviewById(String review_id) {
-        return reviewRepository.getReviewById(review_id);
-    }
+  public LiveData<Review> getReviewById(String review_id) {
+    return reviewRepository.getReviewById(review_id);
+  }
 
-    public ReviewRepository getReviewRepository() {
-        return reviewRepository;
-    }
+  public ReviewRepository getReviewRepository() {
+    return reviewRepository;
+  }
 }

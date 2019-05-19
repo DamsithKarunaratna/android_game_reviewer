@@ -27,37 +27,37 @@ import androidx.lifecycle.LiveData;
  */
 public class GameViewModel extends AndroidViewModel {
 
-    private GameRepository gameRepository;
-    private LiveData<List<Game>> allGames;
+  private GameRepository gameRepository;
+  private LiveData<List<Game>> allGames;
 
-    public GameViewModel(@NonNull Application application) {
-        super(application);
-        gameRepository = new GameRepository(application);
-        allGames = gameRepository.getAllGames();
-    }
+  public GameViewModel(@NonNull Application application) {
+    super(application);
+    gameRepository = new GameRepository(application);
+    allGames = gameRepository.getAllGames();
+  }
 
-    // Add a new game
-    public void insert(Game game) {
-        gameRepository.insert(game);
-    }
+  // Add a new game
+  public void insert(Game game) {
+    gameRepository.insert(game);
+  }
 
-    // Add a game
-    public void update(Game game) {
-        gameRepository.update(game);
-    }
+  // Add a game
+  public void update(Game game) {
+    gameRepository.update(game);
+  }
 
-    // delete a game
-    public void delete(Game game) {
-        gameRepository.delete(game);
-    }
+  // delete a game
+  public void delete(Game game) {
+    gameRepository.delete(game);
+  }
 
-    // get a list of available games
-    public LiveData<List<Game>> getAllGames() {
-        return allGames;
-    }
+  // get a list of available games
+  public LiveData<List<Game>> getAllGames() {
+    return allGames;
+  }
 
-    // return instance of gameRepository
-    public GameRepository getGameRepository() {
-        return gameRepository;
-    }
+  // return instance of gameRepository
+  public GameRepository getGameRepository() {
+    return gameRepository;
+  }
 }
